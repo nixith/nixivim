@@ -1,51 +1,58 @@
+local blink_keymap = {
+	["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+	["<C-e>"] = { "hide" },
+	["<C-enter>"] = { "select_and_accept", "fallback" },
 
-return { -- Autocompletion
-{
-        "care.nvim",
-        -- load care.nvim on InsertEnter
-        event = "InsertEnter",
-	after = function ()
+	["<C-p>"] = { "select_prev", "fallback" },
+	["<C-n>"] = { "select_next", "fallback" },
 
-vim.keymap.set("i", "<c-n>", function()
-    vim.snippet.jump(1)
-end)
-vim.keymap.set("i", "<c-p>", function()
-    vim.snippet.jump(-1)
-end)
-vim.keymap.set("i", "<c-space>", function()
-    require("care").api.complete()
-end)
+	["<C-b>"] = { "scroll_documentation_up", "fallback" },
+	["<C-f>"] = { "scroll_documentation_down", "fallback" },
 
-vim.keymap.set("i", "<cr>", "<Plug>(CareConfirm)")
-vim.keymap.set("i", "<c-e>", "<Plug>(CareClose)")
-vim.keymap.set("i", "<tab>", "<Plug>(CareSelectNext)")
-vim.keymap.set("i", "<s-tab>", "<Plug>(CareSelectPrev)")
-
-vim.keymap.set("i", "<c-f>", function()
-    if require("care").api.doc_is_open() then
-        require("care").api.scroll_docs(4)
-    else
-        vim.api.nvim_feedkeys(vim.keycode("<c-f>"), "n", false)
-    end
-end)
-
-vim.keymap.set("i", "<c-d>", function()
-    if require("care").api.doc_is_open() then
-        require("care").api.scroll_docs(-4)
-    else
-        vim.api.nvim_feedkeys(vim.keycode("<c-f>"), "n", false)
-    end
-end)
-
-care.setup({
+	["<Tab>"] = { "snippet_forward", "fallback" },
+	["<S-Tab>"] = { "snippet_backward", "fallback" },
+}
+local blink_opts = {
+	keymap = blink_keymap,
+	highlight = {
+		-- sets the fallback highlight groups to nvim-cmp's highlight groups
+		-- useful for when your theme doesn't support blink.cmp
+		-- will be removed in a future release, assuming themes add support
+		use_nvim_cmp_as_default = true,
+	},
+	-- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+	-- adjusts spacing to ensure icons are aligned
+	nerd_font_variant = "Mono",
 	sources = {
-		sources = {
-			nvim_lsp = {
-				enabled = true,
+		completion = {
+			-- remember to enable your providers here
+			enabled_providers = { "lsp", "path", "snippets", "buffer", "lazydev" },
+		},
+	},
+	providers = {
+		lazydev = {
+			name = "lazydev", -- IMPORTANT: use the same name as you would for nvim-cmp
+			module = "blink.compat.source",
+
+			-- all blink.cmp source config options work as normal:
+			score_offset = 3,
+
+			opts = {
+				-- options for the completion source
+				-- equivalent to `option` field of nvim-cmp source config
 			},
 		},
 	},
-})
-	end
-    },
+
+	-- experimental auto-brackets support
+	accept = { auto_brackets = { enabled = true } },
+
+	-- experimental signature help support
+	trigger = { signature_help = { enabled = true } },
+	fuzzy = { prebuildBinaries = { download = false } },
 }
+
+require("blink.compat").setup({})
+require("blink.cmp").setup(blink_opts)
+
+return {} -- lazy loading handled internally

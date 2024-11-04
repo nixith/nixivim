@@ -1,17 +1,3 @@
-# Copyright (c) 2023 BirdeeHub
-# Licensed under the MIT license
-# This is an empty nixCats config.
-# you may import this template directly into your nvim folder
-# and then add plugins to categories here,
-# and call the plugins with their default functions
-# within your lua, rather than through the nvim package manager's method.
-# Use the help, and the example repository https://github.com/BirdeeHub/nixCats-nvim
-
-# It allows for easy adoption of nix,
-# while still providing all the extra nix features immediately.
-# Configure in lua, check for a few categories, set a few settings,
-# output packages with combinations of those categories and settings.
-
 # All the same options you make here will be automatically exported in a form available
 # in home manager and in nixosModules, as well as from other flakes.
 # each section is tagged with its relevant help section.
@@ -22,8 +8,21 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim?dir=nix";
+    coq = {
+      url = "github:ms-jpq/coq_nvim";
+      flake = false;
+    };
 
     care-nvim = { url = "github:max397574/care.nvim"; };
+    blink-cmp = { url = "github:Saghen/blink.cmp"; };
+    plugins-care-cmp = {
+      url = "github:max397574/care-cmp";
+      flake = false;
+    };
+    plugins-blink-compat = {
+      url = "github:Saghen/blink.compat";
+      flake = false;
+    };
 
     # neovim-nightly-overlay = {
     #   url = "github:nix-community/neovim-nightly-overlay";
@@ -42,9 +41,8 @@
   };
 
   # see :help nixCats.flake.outputs
-  outputs = { self, nixpkgs, nixCats, care-nvim, ... }@inputs:
+  outputs = { self, nixpkgs, nixCats, care-nvim, blink-cmp, coq, ... }@inputs:
     let
-
       inherit (nixCats) utils;
       luaPath = "${./.}";
       forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
@@ -125,6 +123,8 @@
               fzf
               universal-ctags
               stdenv.cc.cc
+              typos-lsp
+
             ];
             language = {
               nix = mkLang {
@@ -137,25 +137,144 @@
                 formatter = [ pkgs.stylua ];
                 linter = [ pkgs.selene ];
               };
+              typst = mkLang {
+                lsp = [ pkgs.tinymist ];
+                formatter = [ pkgs.typstfmt ];
+              };
+              rust = (mkLang {
+                lsp = [ pkgs.rust-analyzer ];
+                formatter = [ pkgs.rustfmt ];
+                linter = [ pkgs.clippy ];
+                other = with pkgs; [ graphviz-nox ];
+              });
+              julia = (mkLang {
+                lsp = [ pkgs.julia ];
+                #formatter = [ ]; # TODO: find formatter
+                #linter = [ ]; # TODO: find linter
+                #other = with pkgs; [ ];
+              });
             };
           };
 
           # This is for plugins that will load at startup without using packadd:
-          startupPlugins = {
-            general = with pkgs.vimPlugins; [
-              # Needed to lazy load plugins
-              lz-n
-              rtp-nvim
-              lzn-auto-require
+          startupPlugins =
+            { # TODO: review every plugin, configure it, lazy load it or mark it as completed
+              general = with pkgs.vimPlugins; [
+                # Needed to lazy load plugins
+                lz-n
+                iron-nvim
+                conjure
+                cmp-conjure
+                baleia-nvim
+                rtp-nvim
+                lzn-auto-require
 
-              # Lazy loads itself
+                # Lazy loads itself
 
-              # Otherwise want immediately
+                # Otherwise want immediately
 
-              nvim-treesitter.withAllGrammars
-            ];
-            cmp = [ inputs.care-nvim.packages.${pkgs.system}.care-nvim ];
-          };
+                nvim-treesitter.withAllGrammars
+
+                # TODO: lazy load & categorize these
+                otter-nvim
+                grug-far-nvim
+                nvim-autopairs # TODO: integrate with cares
+                neoconf-nvim
+                nvim-rip-substitute # TODO: make binding
+                nvim-treesitter-textobjects # TODO: make bindings
+                SchemaStore-nvim
+                telescope-nvim # TODO make bindings
+                bufferline-nvim # TODO config
+                flash-nvim
+                image-nvim
+                lualine-nvim
+                nvim-notify
+                # spellwarn-nvim # TODO add somehow - not in nixpkgs
+                trouble-nvim
+                which-key-nvim
+                #typst-preview # TODO not in nixpkgs
+                friendly-snippets
+                gitsigns-nvim
+                neogen
+                neotest # TODO - other neotest plugins
+                nvim-dap # TODO - other dap plugins
+                nvim-dap-virtual-text
+                nvim-dap-ui
+                nvim-snippets
+                nvim-ts-autotag
+                rainbow-delimiters-nvim
+                persisted-nvim
+
+                render-markdown-nvim
+              ];
+              cmp = with pkgs.vimPlugins; [
+                #  if using care
+                #pkgs.neovimPlugins.care-cmp
+                #inputs.care-nvim.packages.${pkgs.system}.care-nvim
+
+                #   # (coq_nvim.overrideAttrs
+                #   #   (finalAttrs: previousAttrs: { src = coq; }))
+                #   # coq-artifacts
+                #   # coq-thirdparty
+                #   # cmp-buffer
+                #   # cmp-cmdline
+                #   # cmp-async-path
+                #   # cmp-nvim-lsp-signature-help
+                #   #cmp-nvim-lsp
+                #   # nvim-cmp
+
+                # If using blink
+                blink-cmp.packages.${pkgs.system}.default
+                pkgs.neovimPlugins.blink-compat
+              ];
+
+              #TODO: move as much as possible of the below to optional plugins
+              #++ (with pkgs.vimPlugins; [ cmp-nvim-lsp cmp-path ]);
+              editor = with pkgs.vimPlugins; [
+                comment-nvim
+                nvim-autopairs
+                vim-sleuth
+                indent-blankline-nvim
+              ];
+              ui = with pkgs.vimPlugins; [
+                #TODO: Trouble
+                helpview-nvim
+                dressing-nvim
+                markview-nvim
+                flash-nvim
+                which-key-nvim
+                rose-pine
+                noice-nvim
+                catppuccin-nvim
+                telescope-nvim
+                telescope-fzf-native-nvim
+                nvim-web-devicons
+                fidget-nvim
+                plenary-nvim
+                todo-comments-nvim
+                trouble-nvim
+                gitsigns-nvim
+                which-key-nvim
+                neo-tree-nvim
+                nui-nvim
+              ];
+              language = {
+                lua = with pkgs.vimPlugins; [ lazydev-nvim ];
+                rust = with pkgs.vimPlugins; [ rustaceanvim crates-nvim ];
+                markdown = with pkgs.vimPlugins; [ render-markdown ];
+                typst = with pkgs.vimPlugins; [ ];
+              };
+
+              lsp = with pkgs.vimPlugins; [ nvim-lspconfig ];
+
+              lint = with pkgs.vimPlugins; [ nvim-lint ];
+              format = with pkgs.vimPlugins; [ conform-nvim ];
+
+              snippets = with pkgs.vimPlugins; [
+                nvim-snippets
+                friendly-snippets
+              ];
+            };
 
           # not loaded automatically at startup.
           # use with packadd and an autocommand in config to achieve lazy loading
@@ -168,39 +287,6 @@
                 # also somewhere else
               ];
 
-            editor = with pkgs.vimPlugins; [
-              comment-nvim
-              nvim-autopairs
-              vim-sleuth
-              indent-blankline-nvim
-            ];
-            ui = with pkgs.vimPlugins; [
-              #TODO: Trouble
-
-              rose-pine
-              telescope-nvim
-              telescope-fzf-native-nvim
-              nvim-web-devicons
-              fidget-nvim
-              plenary-nvim
-              todo-comments-nvim
-              gitsigns-nvim
-              which-key-nvim
-              neo-tree-nvim
-              nui-nvim
-            ];
-            language = { lua = with pkgs.vimPlugins; [ lazydev-nvim ]; };
-
-            lsp = with pkgs.vimPlugins; [ nvim-lspconfig ];
-
-            lint = with pkgs.vimPlugins; [ nvim-lint ];
-            format = with pkgs.vimPlugins; [ conform-nvim ];
-
-            cmp = with pkgs.vimPlugins; [ cmp-nvim-lsp cmp-path ];
-            snippets = with pkgs.vimPlugins; [
-              nvim-snippets
-              friendly-snippets
-            ];
           };
 
           # shared libraries to be added to LD_LIBRARY_PATH
@@ -251,6 +337,7 @@
             # your alias may not conflict with your other packages.
             aliases = [ "vim" ];
             # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+            disablePythonSafePath = true;
           };
           # and a set of categories that you want
           # (and other information to pass to lua)
@@ -268,6 +355,8 @@
             language = {
               nix = true;
               lua = true;
+              rust = true;
+              julia = true;
             };
             example = {
               youCan = "add more than just booleans";
