@@ -1,13 +1,11 @@
-local lz = require("lz.n")
-lz.load("plugins")
 require("config.options")
 require("config.keybinds")
-
 vim.g.mapleader = " " -- change leader
 vim.g.maplocalleader = "  " --change localLeader
 
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+-- load configuration stuffs
+-- local builtin = require("telescope.builtin")
+-- vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
 -- Make line numbers default
 -- vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -68,9 +66,6 @@ vim.opt.scrolloff = 10
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 -- this needs to be neat last
-vim.g.coq_settings = { --TODO: Move to cmp module
-	xdg = true,
-}
 
 --TODO move to lazy load
 require("nvim-treesitter.configs").setup({
@@ -112,6 +107,24 @@ require("nvim-treesitter.configs").setup({
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+local lz = require("lz.n")
+lz.load("plugins.lzn")
+
+-- load regular plugins
+require("plugins.init.cmp")
+require("plugins.init.editor")
+require("plugins.init.format")
+require("plugins.init.image")
+require("plugins.init.injections")
+require("plugins.init.iron")
+require("plugins.init.lint")
+require("plugins.init.REPL")
+require("plugins.init.telescope")
+require("plugins.init.text")
+require("plugins.init.ui")
+require("plugins.init.which_key")
+
 require("lzn-auto-require.loader").register_loader()
 -- set colorscheme on open
 vim.cmd.colorscheme("catppuccin-mocha")

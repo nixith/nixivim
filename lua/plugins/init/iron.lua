@@ -59,4 +59,4 @@
 -- vim.keymap.set("n", "<space>rf", "<cmd>IronFocus<cr>")
 -- vim.keymap.set("n", "<space>rh", "<cmd>IronHide<cr>")
 --
--- return {} -- TODO: Lazyload on Iron commands
+return {} -- TODO: Lazyload on Iron commands

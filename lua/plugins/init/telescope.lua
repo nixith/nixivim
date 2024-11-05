@@ -50,5 +50,4 @@ vim.keymap.set("n", "<leader>fw", builtin.live_grep, { desc = "Telescope live gr
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 vim.keymap.set("n", "<leader>fm", builtin.man_pages, { desc = "Telescope man pages" })
-
-return {} --TODO: lazy load
+--TODO: lazy load
