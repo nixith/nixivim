@@ -92,11 +92,11 @@
         { pkgs, settings, categories, name, ... }@packageDef:
         let
           # Self made function, add langauge-based dependencies easily
-          mkLang = { lsp ? [ ], formatter ? [ ], linter ? [ ], debuger ? [ ]
+          mkLang = { lsp ? [ ], formatter ? [ ], linter ? [ ], debugger ? [ ]
             , other ? [ ] }:
             (other ++ pkgs.lib.optionals categories.lsp lsp
               ++ pkgs.lib.optionals categories.lint linter
-              ++ pkgs.lib.optionals categories.debug debuger
+              ++ pkgs.lib.optionals categories.debug debugger
               ++ pkgs.lib.optionals categories.format formatter);
         in {
           # to define and use a new category, simply add a new list to a set here, 
@@ -124,7 +124,7 @@
               universal-ctags
               stdenv.cc.cc
               typos-lsp
-
+              imagemagick
             ];
             language = {
               nix = mkLang {
@@ -140,6 +140,10 @@
               typst = mkLang {
                 lsp = [ pkgs.tinymist ];
                 formatter = [ pkgs.typstfmt ];
+              };
+              json = mkLang {
+                lsp = [ pkgs.nodePackages.vscode-json-languageserver ];
+                formatter = [ pkgs.jq ];
               };
               rust = (mkLang {
                 lsp = [ pkgs.rust-analyzer ];
@@ -180,7 +184,7 @@
                 grug-far-nvim
                 nvim-autopairs # TODO: integrate with cares
                 neoconf-nvim
-                nvim-rip-substitute # TODO: make binding
+                nvim-rip-substitute
                 nvim-treesitter-textobjects # TODO: make bindings
                 SchemaStore-nvim
                 telescope-nvim # TODO make bindings
@@ -195,6 +199,7 @@
                 #typst-preview # TODO not in nixpkgs
                 friendly-snippets
                 gitsigns-nvim
+                marks-nvim
                 neogen
                 neotest # TODO - other neotest plugins
                 nvim-dap # TODO - other dap plugins
@@ -233,14 +238,12 @@
               editor = with pkgs.vimPlugins; [
                 comment-nvim
                 nvim-autopairs
-                vim-sleuth
                 indent-blankline-nvim
               ];
               ui = with pkgs.vimPlugins; [
                 #TODO: Trouble
                 helpview-nvim
                 dressing-nvim
-                markview-nvim
                 flash-nvim
                 which-key-nvim
                 rose-pine
@@ -303,9 +306,9 @@
           # If you know what these are, you can provide custom ones by category here.
           # If you dont, check this link out:
           # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
-          extraWrapperArgs = {
-            test = [ ''--set CATTESTVAR2 "It worked again!"'' ];
-          };
+          # extraWrapperArgs = {
+          #   test = [ ''--set CATTESTVAR2 "It worked again!"'' ];
+          # };
 
           # lists of the functions you would have passed to
           # python.withPackages or lua.withPackages
@@ -316,7 +319,10 @@
           # or run from nvim terminal via :!<packagename>-python3
           extraPython3Packages = { test = (_: [ ]); };
           # populates $LUA_PATH and $LUA_CPATH
-          extraLuaPackages = { test = [ (_: [ ]) ]; };
+          extraLuaPackages = {
+            test = [ (_: [ ]) ];
+            images = [ (p: with p; [ magick ]) ];
+          };
         };
 
       # And then build a package with specific categories from above here:
@@ -343,6 +349,7 @@
           # (and other information to pass to lua)
           categories = {
             general = true;
+            images = true;
             editor = true;
             lint = true;
             debug = false; # TODO: set up debugging

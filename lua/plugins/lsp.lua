@@ -1,3 +1,6 @@
+require("neoconf").setup({
+	-- override any of the default settings here
+}) --TODO: lazyload
 return {
 	{ -- LSP Configuration & Plugins
 		"nvim-lspconfig",
@@ -187,7 +190,18 @@ return {
 			-- NOTE: nixCats: nixd is not available on mason.
 			servers.nixd = {}
 			servers.julials = {}
+
+			servers.jsonls = {
+				settings = {
+					json = {
+						schemas = require("schemastore").json.schemas(),
+						validate = { enable = true },
+					},
+				},
+			}
+
 			servers.typos_lsp = { disagnosticSeverity = "Warning" }
+
 			servers.lua_ls = {
 				-- cmd = {...},
 				-- filetypes = { ...},
@@ -205,6 +219,7 @@ return {
 					},
 				},
 			}
+
 			for server_name, _ in pairs(servers) do
 				require("lspconfig")[server_name].setup(
 					--coq.lsp_ensure_capabilities(
