@@ -1,3 +1,7 @@
+vim.loader.enable()
+
+local lz = require("lz.n")
+lz.load("plugins/lzn")
 require("config.options")
 require("config.keybinds")
 vim.g.mapleader = " " -- change leader
@@ -107,9 +111,6 @@ require("nvim-treesitter.configs").setup({
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-
-local lz = require("lz.n")
-lz.load("plugins.lzn")
 
 -- load regular plugins
 require("plugins.init.cmp")
