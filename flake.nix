@@ -19,6 +19,10 @@
       url = "github:max397574/care-cmp";
       flake = false;
     };
+    plugins-lazydev = {
+      url = "github:folke/lazydev.nvim";
+      flake = false;
+    };
     plugins-blink-compat = {
       url = "github:Saghen/blink.compat";
       flake = false;
@@ -231,6 +235,7 @@
                 # If using blink
                 blink-cmp.packages.${pkgs.system}.default
                 pkgs.neovimPlugins.blink-compat
+                pkgs.neovimPlugins.lazydev
               ];
 
               #TODO: move as much as possible of the below to optional plugins
@@ -262,7 +267,7 @@
                 nui-nvim
               ];
               language = {
-                lua = with pkgs.vimPlugins; [ lazydev-nvim ];
+                #lua = with pkgs.vimPlugins; [ lazydev-nvim ];
                 rust = with pkgs.vimPlugins; [ rustaceanvim crates-nvim ];
                 markdown = with pkgs.vimPlugins; [ render-markdown ];
                 typst = with pkgs.vimPlugins; [ ];

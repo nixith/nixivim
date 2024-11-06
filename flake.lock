@@ -7,11 +7,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1730338815,
-        "narHash": "sha256-4/J/YAzjFN/+a2hrBny3wTR06S9RrVApXNpUDCq3LHg=",
+        "lastModified": 1730826358,
+        "narHash": "sha256-rKvAirzB1w3x04gtIiHLFp0NnICkka1rn6cqOHIKCo0=",
         "owner": "Saghen",
         "repo": "blink.cmp",
-        "rev": "193423ca584e4e1a9639d6c480a6b952db566c21",
+        "rev": "18e4438c9cfe8e9497e2dffd935627ba5d00198a",
         "type": "github"
       },
       "original": {
@@ -27,11 +27,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1730357151,
-        "narHash": "sha256-VpFEN0aSrXhjnn8JPlxix6STWuBguiqtDLo9ui47GNc=",
+        "lastModified": 1730816211,
+        "narHash": "sha256-etCdTAmfrbxCwnesiDyCuGYer6o0d4fW4s8AsML9+14=",
         "owner": "max397574",
         "repo": "care.nvim",
-        "rev": "117c0c5e9d33bdf6e70fa0af05eb0aca82d342e6",
+        "rev": "394d71f2543d9e2ca4f87ad43fa2ff0b8efc29a5",
         "type": "github"
       },
       "original": {
@@ -252,11 +252,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1730272153,
-        "narHash": "sha256-B5WRZYsRlJgwVHIV6DvidFN7VX7Fg9uuwkRW9Ha8z+w=",
+        "lastModified": 1730831018,
+        "narHash": "sha256-2S0HwIFRxYp+afuoFORcZA9TjryAf512GmE0MTfEOPU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2d2a9ddbe3f2c00747398f3dc9b05f7f2ebb0f53",
+        "rev": "8c4dc69b9732f6bbe826b5fbb32184987520ff26",
         "type": "github"
       },
       "original": {
@@ -269,11 +269,11 @@
     "plugins-blink-compat": {
       "flake": false,
       "locked": {
-        "lastModified": 1730333843,
-        "narHash": "sha256-kCLbhDGbz98Gb0RPUDvqtpNeVeQbiYlX7V2w8pYSwIg=",
+        "lastModified": 1730842821,
+        "narHash": "sha256-4LIjdcr1hlbCOx3Oj+JNqgpvwSKlZNmDfUVlp0XCFtE=",
         "owner": "Saghen",
         "repo": "blink.compat",
-        "rev": "045546ec214220791a006709dd539038f382d091",
+        "rev": "03ac4fc279e5bb74b7b8254334eac6941ecaf00a",
         "type": "github"
       },
       "original": {
@@ -298,6 +298,22 @@
         "type": "github"
       }
     },
+    "plugins-lazydev": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1730477088,
+        "narHash": "sha256-Xgeb2ABoCkWIr1Pfh41vp1hmbgQJY9vCAkztamdzrTk=",
+        "owner": "folke",
+        "repo": "lazydev.nvim",
+        "rev": "d5800897d9180cea800023f2429bce0a94ed6064",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "lazydev.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "blink-cmp": "blink-cmp",
@@ -306,7 +322,8 @@
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs_4",
         "plugins-blink-compat": "plugins-blink-compat",
-        "plugins-care-cmp": "plugins-care-cmp"
+        "plugins-care-cmp": "plugins-care-cmp",
+        "plugins-lazydev": "plugins-lazydev"
       }
     },
     "rust-analyzer-src": {
