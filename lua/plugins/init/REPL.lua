@@ -1,3 +1,4 @@
+vim.g["conjure#mapping#doc_word"] = "gk" -- don't have conjure overwrite doc hover
 require("conjure.main").main()
 require("conjure.mapping")["on-filetype"]()
 
