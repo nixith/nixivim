@@ -57,8 +57,6 @@ vim.keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Qu
 
 trouble.setup() --TODO: filter out conjure
 
---gitsigns
-require("gitsigns").setup()
 require("marks").setup()
 
 --markdown render
@@ -66,5 +64,37 @@ require("render-markdown").setup()
 
 --todo comonets
 require("todo-comments").setup()
+
+local snacks = require("snacks")
+snacks.setup({
+	bigfile = { enabled = true },
+	notifier = {
+		enabled = true,
+		timeout = 3000,
+	},
+	quickfile = { enabled = true },
+	statuscolumn = { enabled = true },
+	words = { enabled = true },
+	-- styles = {
+	-- 	notification = {
+	-- 		wo = { wrap = true }, -- Wrap notifications
+	-- 	},
+	-- },
+})
+vim.keymap.set({ "n", "t" }, "<C-/>", function()
+	snacks.terminal.toggle()
+end, { desc = "Toggle terminal" })
+vim.keymap.set("n", "<leader>gg", function()
+	snacks.lazygit.open()
+end, { desc = "Toggle lazygit" })
+
+snacks.statuscolumn.setup()
+
+vim.keymap.set("n", "<leader>gb", function()
+	snacks.git.blame_line()
+end, { desc = "run git blame on the current line" })
+vim.keymap.set("n", "<leader>gB", function()
+	snacks.gitbrowse()
+end, { desc = "Git Browse" })
 
 return {} -- TODO: Lazyload? I feel like I almost always want this, maybe when I have multiple buffers
