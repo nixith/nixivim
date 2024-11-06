@@ -23,23 +23,32 @@ local blink_opts = {
 	-- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
 	-- adjusts spacing to ensure icons are aligned
 	nerd_font_variant = "Mono",
+	windows = {
+		autocomplete = {
+			draw = "reversed",
+			winblend = vim.o.pumblend,
+		},
+		documentation = {
+			auto_show = true,
+		},
+		ghost_text = {
+			enabled = true,
+		},
+	},
+
 	sources = {
 		completion = {
 			-- remember to enable your providers here
 			enabled_providers = { "lsp", "path", "snippets", "buffer", "lazydev" },
 		},
-	},
-	providers = {
-		lazydev = {
-			name = "lazydev", -- IMPORTANT: use the same name as you would for nvim-cmp
-			module = "blink.compat.source",
-
-			-- all blink.cmp source config options work as normal:
-			score_offset = 3,
-
-			opts = {
-				-- options for the completion source
-				-- equivalent to `option` field of nvim-cmp source config
+		providers = {
+			lazydev = {
+				name = "lazydev", -- IMPORTANT: use the same name as you would for nvim-cmp
+				module = "blink.compat.source",
+				opts = {
+					-- options for the completion source
+					-- equivalent to `option` field of nvim-cmp source config
+				},
 			},
 		},
 	},
@@ -49,7 +58,7 @@ local blink_opts = {
 
 	-- experimental signature help support
 	trigger = { signature_help = { enabled = true } },
-	fuzzy = { prebuildBinaries = { download = false } },
+	fuzzy = { prebuilt_binaries = { download = false } },
 }
 
 require("blink.compat").setup({})
