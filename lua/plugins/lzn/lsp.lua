@@ -1,6 +1,7 @@
-require("neoconf").setup({
-	-- override any of the default settings here
-}) --TODO: lazyload
+-- require("neoconf").setup({
+-- 	-- override any of the default settings here
+-- }) --TODO: lazyload
+
 return {
 	{ -- LSP Configuration & Plugins
 		"nvim-lspconfig",
@@ -238,9 +239,9 @@ return {
 	{
 		"lazydev",
 		ft = "lua", -- only load on lua files
-		before = function()
-			require("lz.n").trigger_load("coq")
-		end,
+		-- before = function()
+		-- 	require("lz.n").trigger_load()V
+		-- end,
 		after = function()
 			require("lazydev").setup({
 				library = {
@@ -256,7 +257,8 @@ return {
 					-- add the cmp source for completion of:
 					-- `require "modname"`
 					-- `---@module "modname"`
-					cmp = true,
+					cmp = false,
+					blink = true,
 					-- same, but for Coq
 					coq = false,
 				},
