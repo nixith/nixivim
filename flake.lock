@@ -314,6 +314,22 @@
         "type": "github"
       }
     },
+    "plugins-snacks-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1730917306,
+        "narHash": "sha256-dWWqK5gk8TFBOiCrEwTEVscFF7Sfk/QgyiY1dEonFP4=",
+        "owner": "folke",
+        "repo": "snacks.nvim",
+        "rev": "6ff28b3a37aa9fd08b84d1ef7aeb5e551c25b763",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "snacks.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "blink-cmp": "blink-cmp",
@@ -323,7 +339,8 @@
         "nixpkgs": "nixpkgs_4",
         "plugins-blink-compat": "plugins-blink-compat",
         "plugins-care-cmp": "plugins-care-cmp",
-        "plugins-lazydev": "plugins-lazydev"
+        "plugins-lazydev": "plugins-lazydev",
+        "plugins-snacks-nvim": "plugins-snacks-nvim"
       }
     },
     "rust-analyzer-src": {

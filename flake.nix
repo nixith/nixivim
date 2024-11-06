@@ -27,6 +27,10 @@
       url = "github:Saghen/blink.compat";
       flake = false;
     };
+    plugins-snacks-nvim = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
 
     # neovim-nightly-overlay = {
     #   url = "github:nix-community/neovim-nightly-overlay";
@@ -176,6 +180,7 @@
                 baleia-nvim
                 rtp-nvim
                 lzn-auto-require
+                project-nvim
 
                 # Lazy loads itself
 
@@ -265,6 +270,8 @@
                 which-key-nvim
                 neo-tree-nvim
                 nui-nvim
+
+                pkgs.neovimPlugins.snacks-nvim
               ];
               language = {
                 #lua = with pkgs.vimPlugins; [ lazydev-nvim ];
