@@ -42,14 +42,16 @@ local blink_opts = {
 			enabled_providers = { "lsp", "path", "snippets", "buffer", "lazydev" },
 		},
 		providers = {
-			lazydev = {
-				name = "lazydev", -- IMPORTANT: use the same name as you would for nvim-cmp
-				module = "blink.compat.source",
-				opts = {
-					-- options for the completion source
-					-- equivalent to `option` field of nvim-cmp source config
-				},
-			},
+			-- lazydev = {
+			-- 	name = "lazydev", -- IMPORTANT: use the same name as you would for nvim-cmp
+			-- 	module = "blink.compat.source",
+			-- 	opts = {
+			-- 		-- options for the completion source
+			-- 		-- equivalent to `option` field of nvim-cmp source config
+			-- 	},
+			-- },
+			lsp = { fallback_for = { "lazydev" } },
+			lazydev = { name = "LazyDev", module = "lazydev.integrations.blink" },
 		},
 	},
 

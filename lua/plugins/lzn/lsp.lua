@@ -258,7 +258,7 @@ return {
 					-- `require "modname"`
 					-- `---@module "modname"`
 					cmp = false,
-					blink = true,
+					blink = false,
 					-- same, but for Coq
 					coq = false,
 				},
