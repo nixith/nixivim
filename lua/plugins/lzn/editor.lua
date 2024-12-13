@@ -1,18 +1,8 @@
 -- auto pairs
-local npairs = require("nvim-autopairs")
---local Rule = require("nvim-autopairs.rule")
-npairs.setup({
-	check_ts = true,
-	ts_config = {},
-})
 
 -- auto tag pairs
-local tag = require("nvim-ts-autotag")
-tag.setup()
 
 -- super edit
-local grug = require("grug-far")
-grug.setup()
 
 --ripgrep substitute
 local rip_sub = require("rip-substitute")
@@ -62,4 +52,38 @@ require("project_nvim").setup({
 	},
 })
 
-return {} -- TODO: setup lazy loading
+return {
+	{
+		"nvim-autopairs.nvim",
+		event = "InsertEnter",
+		after = function()
+			local npairs = require("nvim-autopairs")
+			--local Rule = require("nvim-autopairs.rule")
+			npairs.setup({
+				check_ts = true,
+				ts_config = {},
+			})
+		end,
+	},
+	{
+		"nvim-ts-autotag.nvim",
+		event = "InsertEnter",
+		after = function()
+			local tag = require("nvim-ts-autotag")
+			tag.setup()
+		end,
+	},
+	{
+		"grug-far",
+		cmd = "GrugFar",
+		after = function()
+			local grug = require("grug-far")
+			grug.setup()
+		end,
+	},
+	{
+		"",
+		event = "InsertEnter",
+		after = function() end,
+	},
+} -- TODO: setup lazy loading

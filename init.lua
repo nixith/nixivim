@@ -114,7 +114,7 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
 -- load regular plugins
 require("plugins.init.cmp")
-require("plugins.init.editor")
+--require("plugins.init.editor")
 require("plugins.init.format")
 require("plugins.init.image")
 require("plugins.init.injections")

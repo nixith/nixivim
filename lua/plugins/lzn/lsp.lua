@@ -1,7 +1,14 @@
 -- require("neoconf").setup({
 -- 	-- override any of the default settings here
 -- }) --TODO: lazyload
-
+require("project_nvim").setup({
+	sync_root_with_cwd = true,
+	respect_buf_cwd = true,
+	update_focused_file = {
+		enable = true,
+		update_root = true,
+	},
+})
 return {
 	{ -- LSP Configuration & Plugins
 		"nvim-lspconfig",
@@ -202,6 +209,7 @@ return {
 			}
 
 			servers.typos_lsp = { disagnosticSeverity = "Warning" }
+			servers.tinymist = {}
 
 			servers.lua_ls = {
 				-- cmd = {...},

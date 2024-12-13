@@ -31,6 +31,15 @@
       url = "github:folke/snacks.nvim";
       flake = false;
     };
+    #2KAbhishek/termim.nvim
+    plugins-exercism-nvim = {
+      url = "github:2KAbhishek/exercism.nvim";
+      flake = false;
+    };
+    plugins-termim-nvim = {
+      url = "github:2KAbhishek/termim.nvim";
+      flake = false;
+    };
 
     # neovim-nightly-overlay = {
     #   url = "github:nix-community/neovim-nightly-overlay";
@@ -172,6 +181,7 @@
           startupPlugins =
             { # TODO: review every plugin, configure it, lazy load it or mark it as completed
               general = with pkgs.vimPlugins; [
+                pkgs.neovimPlugins.exercism-nvim
                 # Needed to lazy load plugins
                 lz-n
                 iron-nvim
@@ -219,7 +229,9 @@
                 rainbow-delimiters-nvim
                 persisted-nvim
 
-                render-markdown-nvim
+                #render-markdown-nvim
+                markview-nvim
+
               ];
               cmp = with pkgs.vimPlugins; [
                 #  if using care
@@ -260,6 +272,7 @@
                 noice-nvim
                 catppuccin-nvim
                 telescope-nvim
+                toggleterm-nvim
                 telescope-fzf-native-nvim
                 nvim-web-devicons
                 fidget-nvim
@@ -277,7 +290,7 @@
                 #lua = with pkgs.vimPlugins; [ lazydev-nvim ];
                 rust = with pkgs.vimPlugins; [ rustaceanvim crates-nvim ];
                 markdown = with pkgs.vimPlugins; [ render-markdown ];
-                typst = with pkgs.vimPlugins; [ ];
+                typst = with pkgs.vimPlugins; [ typst-preview-nvim ];
               };
 
               lsp = with pkgs.vimPlugins; [ nvim-lspconfig ];

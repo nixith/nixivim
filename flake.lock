@@ -298,6 +298,22 @@
         "type": "github"
       }
     },
+    "plugins-exercism-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733089831,
+        "narHash": "sha256-gB9B1vex/HOPGgNrdXhLIQveoH6jcUS0nV/xPXaEgBk=",
+        "owner": "2KAbhishek",
+        "repo": "exercism.nvim",
+        "rev": "d2b6c90932dc7f96c1af33998b303588d8a82eab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "2KAbhishek",
+        "repo": "exercism.nvim",
+        "type": "github"
+      }
+    },
     "plugins-lazydev": {
       "flake": false,
       "locked": {
@@ -330,6 +346,22 @@
         "type": "github"
       }
     },
+    "plugins-termim-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1720600078,
+        "narHash": "sha256-JmiLnIUgfroN1+3qRd/qHDTXrKcAGrs6dq96/KwoprE=",
+        "owner": "2KAbhishek",
+        "repo": "termim.nvim",
+        "rev": "58344167abb97bcef9bf720a762ea653a94e9daa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "2KAbhishek",
+        "repo": "termim.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "blink-cmp": "blink-cmp",
@@ -339,8 +371,10 @@
         "nixpkgs": "nixpkgs_4",
         "plugins-blink-compat": "plugins-blink-compat",
         "plugins-care-cmp": "plugins-care-cmp",
+        "plugins-exercism-nvim": "plugins-exercism-nvim",
         "plugins-lazydev": "plugins-lazydev",
-        "plugins-snacks-nvim": "plugins-snacks-nvim"
+        "plugins-snacks-nvim": "plugins-snacks-nvim",
+        "plugins-termim-nvim": "plugins-termim-nvim"
       }
     },
     "rust-analyzer-src": {
