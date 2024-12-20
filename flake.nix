@@ -157,6 +157,7 @@
               typst = mkLang {
                 lsp = [ pkgs.tinymist ];
                 formatter = [ pkgs.typstfmt ];
+                other = [ pkgs.websocat ];
               };
               json = mkLang {
                 lsp = [ pkgs.nodePackages.vscode-json-languageserver ];
@@ -330,7 +331,13 @@
           # environmentVariables:
           # this section is for environmentVariables that should be available
           # at RUN TIME for plugins. Will be available to path within neovim terminal
-          environmentVariables = { test = { CATTESTVAR = "It worked!"; }; };
+          environmentVariables = {
+            typst = {
+              WEBSOCAT_PATH = "${pkgs.websocat}";
+              TINYMIST_PATH = "${pkgs.tinymist}";
+            };
+            test = { CATTESTVAR = "It worked!"; };
+          };
 
           # If you know what these are, you can provide custom ones by category here.
           # If you dont, check this link out:
@@ -394,6 +401,7 @@
               lua = true;
               rust = true;
               julia = true;
+              typst = true;
             };
             example = {
               youCan = "add more than just booleans";

@@ -126,6 +126,6 @@ require("plugins.init.text")
 require("plugins.init.ui")
 require("plugins.init.which_key")
 
-require("lzn-auto-require.loader").enable()
+--require("lzn-auto-require").enable()
 -- set colorscheme on open
 vim.cmd.colorscheme("catppuccin-mocha")

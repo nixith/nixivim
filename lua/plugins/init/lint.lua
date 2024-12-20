@@ -3,6 +3,7 @@ lint.linters_by_ft = {
 	--  markdown = {'vale'},
 	lua = { "selene" },
 	nix = { "nix" },
+	python = { "ruff" },
 }
 
 lint.linters.cspell = require("lint.util").wrap(lint.linters.cspell, function(diagnostic)

@@ -81,9 +81,9 @@ return {
 			grug.setup()
 		end,
 	},
-	{
-		"",
-		event = "InsertEnter",
-		after = function() end,
-	},
+	-- {
+	-- 	"",
+	-- 	event = "InsertEnter",
+	-- 	after = function() end,
+	-- },
 } -- TODO: setup lazy loading

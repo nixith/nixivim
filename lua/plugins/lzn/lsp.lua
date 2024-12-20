@@ -198,6 +198,7 @@ return {
 			-- NOTE: nixCats: nixd is not available on mason.
 			servers.nixd = {}
 			servers.julials = {}
+			servers.basedpyright = {}
 
 			servers.jsonls = {
 				settings = {
