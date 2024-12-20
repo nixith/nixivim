@@ -162,6 +162,10 @@
                 lsp = [ pkgs.nodePackages.vscode-json-languageserver ];
                 formatter = [ pkgs.jq ];
               };
+              python = mkLang {
+                lsp = with pkgs; [ basedpyright ];
+                formatter = with pkgs; [ ruff ];
+              };
               rust = (mkLang {
                 lsp = [ pkgs.rust-analyzer ];
                 formatter = [ pkgs.rustfmt ];
@@ -386,6 +390,7 @@
             ui = true;
             language = {
               nix = true;
+              python = true;
               lua = true;
               rust = true;
               julia = true;
