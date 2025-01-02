@@ -32,10 +32,10 @@
       flake = false;
     };
     #2KAbhishek/termim.nvim
-    plugins-exercism-nvim = {
-      url = "github:2KAbhishek/exercism.nvim";
-      flake = false;
-    };
+    # plugins-exercism-nvim = {
+    #   url = "github:2KAbhishek/exercism.nvim";
+    #   flake = false;
+    # };
     plugins-termim-nvim = {
       url = "github:2KAbhishek/termim.nvim";
       flake = false;
@@ -186,7 +186,7 @@
           startupPlugins =
             { # TODO: review every plugin, configure it, lazy load it or mark it as completed
               general = with pkgs.vimPlugins; [
-                pkgs.neovimPlugins.exercism-nvim
+                #pkgs.neovimPlugins.exercism-nvim
                 # Needed to lazy load plugins
                 lz-n
                 iron-nvim
