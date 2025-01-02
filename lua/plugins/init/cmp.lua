@@ -39,7 +39,14 @@ local blink_opts = {
 	sources = {
 		completion = {
 			-- remember to enable your providers here
-			enabled_providers = { "lsp", "path", "snippets", "buffer", "lazydev" },
+			enabled_providers = {
+				"lsp",
+				"path",
+				"snippets",
+				"buffer",
+				"lazydev",
+				-- "markdown" --TODO: update when blink integration hits main
+			},
 		},
 		providers = {
 			-- lazydev = {
@@ -52,6 +59,11 @@ local blink_opts = {
 			-- },
 			lsp = { fallback_for = { "lazydev" } },
 			lazydev = { name = "LazyDev", module = "lazydev.integrations.blink" },
+			-- markdown = {
+			-- 	name = "RenderMarkdown",
+			-- 	module = "render-markdown.integ.blink",
+			-- 	fallbacks = { "lsp" },
+			-- },
 		},
 	},
 
