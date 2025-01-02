@@ -60,7 +60,7 @@ trouble.setup() --TODO: filter out conjure
 require("marks").setup()
 
 --markdown render
-require("markview").setup()
+--require("markview").setup()
 
 --todo comonets
 require("todo-comments").setup()
@@ -81,9 +81,9 @@ snacks.setup({
 	-- 	},
 	-- },
 })
--- vim.keymap.set({ "n", "t" }, "<C-/>", function()
--- 	snacks.terminal.toggle()
--- end, { desc = "Toggle terminal" })
+vim.keymap.set({ "n", "t" }, "<C-/>", function()
+	snacks.terminal.toggle()
+end, { desc = "Toggle terminal" })
 vim.keymap.set("n", "<leader>gg", function()
 	snacks.lazygit.open()
 end, { desc = "Toggle lazygit" })
