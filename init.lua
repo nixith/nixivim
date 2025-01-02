@@ -125,6 +125,7 @@ require("plugins.init.telescope")
 require("plugins.init.text")
 require("plugins.init.ui")
 require("plugins.init.which_key")
+require("plugins.init.md")
 
 --require("lzn-auto-require").enable()
 -- set colorscheme on open
