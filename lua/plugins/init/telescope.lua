@@ -6,48 +6,38 @@
 -- builtin.keymaps
 --builtin.current_buffer_fuzzy_find
 --telescope.setup({})
-require("telescope").setup({
-	defaults = {
-		-- Default configuration for telescope goes here:
-		-- config_key = value,
-		mappings = {
-			i = {
-				-- map actions.which_key to <C-h> (default: <C-/>)
-				-- actions.which_key shows the mappings for your picker,
-				-- e.g. git_{create, delete, ...}_branch for the git_branches picker
-				["<C-h>"] = "which_key",
-			},
-		},
-	},
-	pickers = {
-		-- Default configuration for builtin pickers goes here:
-		-- picker_name = {
-		--   picker_config_key = value,
-		--   ...
-		-- }
-		-- Now the picker_config_key will be applied every time you call this
-		-- builtin picker
-	},
-	extensions = {
-		-- Your extension configuration goes here:
-		-- extension_name = {
-		--   extension_config_key = value,
-		-- }
-		-- please take a look at the readme of the extension you want to configure
-		fzf = {
-			fuzzy = true, -- false will only do exact matching
-			override_generic_sorter = true, -- override the generic sorter
-			override_file_sorter = true, -- override the file sorter
-			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-			-- the default case_mode is "smart_case"
-		},
-	},
-})
-require("telescope").load_extension("fzf")
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>fw", builtin.live_grep, { desc = "Telescope live grep" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
-vim.keymap.set("n", "<leader>fm", builtin.man_pages, { desc = "Telescope man pages" })
---TODO: lazy load
+require("fzf-lua").setup("default-title")
+
+local builtin = require("fzf-lua")
+vim.keymap.set("n", "<leader>ff", builtin.files, { desc = "[f]ind [f]iles from path" })
+vim.keymap.set("n", "<leader>fw", builtin.live_grep_glob, { desc = "[f]ind [w]ord" })
+vim.keymap.set("n", "<leader>ft", builtin.tags_live_grep, { desc = "[f]ind [t]ag" })
+vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "[f]ind [b]uffers" })
+vim.keymap.set("n", "<leader>fd", builtin.diagnostics_workspace, { desc = "[f]ind [d]iagnostics" })
+vim.keymap.set("n", "<leader>fl", builtin.lsp_finder, { desc = "[f]ind [l]SP item" })
+vim.keymap.set("n", "<leader>fh", builtin.helptags, { desc = "[f]ind [h]elp tags" })
+vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[f]ind [k]eymaps" })
+vim.keymap.set("n", "<leader>fm", builtin.manpages, { desc = "[f]ind [m]anpages" })
+
+-- debug
+
+-- vim.api.nvim_create_autocmd("DapAtattch", { --TODO: DAP auGroup
+-- 	group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
+-- 	callback = function(event)
+-- 		-- NOTE: Remember that Lua is a real programming language, and as such it is possible
+-- 		-- to define small helper and utility functions so you don't have to repeat yourself.
+-- 		--
+-- 		-- In this case, we create a function that lets us more easily define mappings specific
+-- 		-- for LSP related items. It sets the mode, buffer and description for us each time.
+-- 		local map = function(keys, func, desc)
+-- 			vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+-- 		end
+--
+-- 		map("<leader>dfc", builtin.manpages, "[d]ebug [f]ind [c]ommands")
+-- 		map("<leader>dfC", builtin.manpages, "[d]ebug [f]ind [C]onfigurations")
+-- 		map("<leader>dfb", builtin.manpages, "[d]ebug [f]ind [b]reakpoints")
+-- 		map("<leader>dfv", builtin.manpages, "[d]ebug [f]ind [v]ariables")
+-- 	end,
+-- })
+--TODO: lazy /loada
+--
