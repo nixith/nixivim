@@ -91,7 +91,7 @@
               # This overlay grabs all the inputs named in the format
               # `plugins-<pluginName>`
               # Once we add this overlay to our nixpkgs, we are able to
-              # use `pkgs.neovimPlugins`, which is a set of our plugins.
+              # use `pkgs.neovimPlugins`,  which is a set of our plugins.
               (utils.standardPluginOverlay inputs)
               # add any flake overlays here.
             ];
@@ -211,7 +211,7 @@
                 nvim-rip-substitute
                 nvim-treesitter-textobjects # TODO: make bindings
                 SchemaStore-nvim
-                telescope-nvim # TODO make bindings
+                fzf-lua
                 bufferline-nvim # TODO config
                 flash-nvim
                 image-nvim
@@ -235,7 +235,7 @@
                 persisted-nvim
 
                 #render-markdown-nvim
-                markview-nvim
+                #markview-nvim
 
               ];
               cmp = with pkgs.vimPlugins; [
@@ -294,7 +294,10 @@
               language = {
                 #lua = with pkgs.vimPlugins; [ lazydev-nvim ];
                 rust = with pkgs.vimPlugins; [ rustaceanvim crates-nvim ];
-                markdown = with pkgs.vimPlugins; [ render-markdown ];
+                markdown = with pkgs.vimPlugins; [
+                  render-markdown-nvim
+                  obsidian-nvim
+                ];
                 typst = with pkgs.vimPlugins; [ typst-preview-nvim ];
               };
 
@@ -397,6 +400,7 @@
             ui = true;
             language = {
               nix = true;
+              markdown = true;
               python = true;
               lua = true;
               rust = true;
