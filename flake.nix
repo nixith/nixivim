@@ -27,10 +27,10 @@
       url = "github:Saghen/blink.compat";
       flake = false;
     };
-    plugins-snacks-nvim = {
-      url = "github:folke/snacks.nvim";
-      flake = false;
-    };
+    # plugins-snacks-nvim = {
+    #   url = "github:folke/snacks.nvim";
+    #   flake = false;
+    # };
     #2KAbhishek/termim.nvim
     # plugins-exercism-nvim = {
     #   url = "github:2KAbhishek/exercism.nvim";
@@ -289,7 +289,7 @@
                 neo-tree-nvim
                 nui-nvim
 
-                pkgs.neovimPlugins.snacks-nvim
+                snacks-nvim
               ];
               language = {
                 #lua = with pkgs.vimPlugins; [ lazydev-nvim ];

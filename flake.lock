@@ -314,22 +314,6 @@
         "type": "github"
       }
     },
-    "plugins-snacks-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1735622661,
-        "narHash": "sha256-wvd3Hb5of/luB6/Psw4SLcxl9h9NnpTPOqw57jY8Ufc=",
-        "owner": "folke",
-        "repo": "snacks.nvim",
-        "rev": "d312053f78b4fb55523def179ac502438dd93193",
-        "type": "github"
-      },
-      "original": {
-        "owner": "folke",
-        "repo": "snacks.nvim",
-        "type": "github"
-      }
-    },
     "plugins-termim-nvim": {
       "flake": false,
       "locked": {
@@ -356,7 +340,6 @@
         "plugins-blink-compat": "plugins-blink-compat",
         "plugins-care-cmp": "plugins-care-cmp",
         "plugins-lazydev": "plugins-lazydev",
-        "plugins-snacks-nvim": "plugins-snacks-nvim",
         "plugins-termim-nvim": "plugins-termim-nvim"
       }
     },
