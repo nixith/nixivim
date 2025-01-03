@@ -196,6 +196,7 @@
                 rtp-nvim
                 lzn-auto-require
                 project-nvim
+                remote-nvim-nvim
 
                 # Lazy loads itself
 
