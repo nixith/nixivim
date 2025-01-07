@@ -330,6 +330,22 @@
         "type": "github"
       }
     },
+    "plugins-utils-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733090432,
+        "narHash": "sha256-0Mjae+E30Zj6cK7bInFuAPFRD+EB3gPSo5P1Hz3h/Vk=",
+        "owner": "2KAbhishek",
+        "repo": "utils.nvim",
+        "rev": "77d93532a7bc2638f5731859283fad2e64cfb9cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "2KAbhishek",
+        "repo": "utils.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "blink-cmp": "blink-cmp",
@@ -340,6 +356,7 @@
         "plugins-blink-compat": "plugins-blink-compat",
         "plugins-care-cmp": "plugins-care-cmp",
         "plugins-lazydev": "plugins-lazydev",
+        "plugins-snacks-nvim": "plugins-snacks-nvim",
         "plugins-termim-nvim": "plugins-termim-nvim"
       }
     },

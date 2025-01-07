@@ -142,6 +142,7 @@
               stdenv.cc.cc
               typos-lsp
               imagemagick
+              exercism
             ];
             language = {
               nix = mkLang {
