@@ -154,6 +154,10 @@
                 formatter = [ pkgs.stylua ];
                 linter = [ pkgs.selene ];
               };
+              c = mkLang {
+                lsp = [ pkgs.ccls ];
+                formatter = [ pkgs.astyle ];
+              };
               typst = mkLang {
                 lsp = [ pkgs.tinymist ];
                 formatter = [ pkgs.typstfmt ];

@@ -229,6 +229,7 @@ return {
 					},
 				},
 			}
+			servers.ccls = {}
 
 			for server_name, _ in pairs(servers) do
 				require("lspconfig")[server_name].setup(
