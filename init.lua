@@ -127,7 +127,7 @@ require("plugins.init.ui")
 require("plugins.init.which_key")
 require("plugins.init.md")
 require("plugins.init.remote")
-require("plugins.init.exercism")
+--require("plugins.init.exercism")
 
 --require("lzn-auto-require").enable()
 -- set colorscheme on open
