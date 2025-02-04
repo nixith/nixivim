@@ -131,4 +131,4 @@ require("plugins.init.remote")
 
 --require("lzn-auto-require").enable()
 -- set colorscheme on open
-vim.cmd.colorscheme("catppuccin-mocha")
+vim.cmd.colorscheme("mini16")

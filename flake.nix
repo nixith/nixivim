@@ -192,6 +192,7 @@
             { # TODO: review every plugin, configure it, lazy load it or mark it as completed
               general = with pkgs.vimPlugins; [
                 #pkgs.neovimPlugins.exercism-nvim
+                mini-nvim
                 # Needed to lazy load plugins
                 lz-n
                 iron-nvim
@@ -323,7 +324,6 @@
           optionalPlugins = {
             general = with pkgs.vimPlugins;
               [
-                mini-nvim
                 # nixCats will filter out duplicate packages
                 # so you can put dependencies with stuff even if they're
                 # also somewhere else
