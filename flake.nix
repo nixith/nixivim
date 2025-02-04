@@ -155,10 +155,7 @@
                 formatter = [ pkgs.stylua ];
                 linter = [ pkgs.selene ];
               };
-              c = mkLang {
-                lsp = [ pkgs.clang-tools ];
-                formatter = [ pkgs.astyle ];
-              };
+              c = mkLang { lsp = [ pkgs.clang-tools ]; };
               typst = mkLang {
                 lsp = [ pkgs.tinymist ];
                 formatter = [ pkgs.typstfmt ];
@@ -317,6 +314,7 @@
                   nvim-java-dap
                   nvim-java-core
                 ];
+                c = with pkgs.vimPlugins; [ clangd_extensions-nvim ];
               };
 
               lsp = with pkgs.vimPlugins; [ nvim-lspconfig ];

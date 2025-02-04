@@ -4,6 +4,7 @@ lint.linters_by_ft = {
 	lua = { "selene" },
 	nix = { "nix" },
 	python = { "ruff" },
+	c = { "clangtify" },
 }
 
 lint.linters.cspell = require("lint.util").wrap(lint.linters.cspell, function(diagnostic)
