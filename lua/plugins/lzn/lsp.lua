@@ -33,7 +33,13 @@ return {
 		--     },
 		--   },
 		-- },
-
+		before = function()
+			require("java").setup({
+				jdk = {
+					auto_install = false,
+				},
+			})
+		end,
 		after = function()
 			-- Brief aside: **What is LSP?**
 			--
@@ -211,6 +217,7 @@ return {
 
 			servers.typos_lsp = { disagnosticSeverity = "Warning" }
 			servers.tinymist = {}
+			servers.jdtls = {}
 
 			servers.lua_ls = {
 				-- cmd = {...},
@@ -229,7 +236,7 @@ return {
 					},
 				},
 			}
-			servers.ccls = {}
+			servers.clangd = {}
 
 			for server_name, _ in pairs(servers) do
 				require("lspconfig")[server_name].setup(

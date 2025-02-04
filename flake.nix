@@ -156,7 +156,7 @@
                 linter = [ pkgs.selene ];
               };
               c = mkLang {
-                lsp = [ pkgs.ccls ];
+                lsp = [ pkgs.clang-tools ];
                 formatter = [ pkgs.astyle ];
               };
               typst = mkLang {
@@ -184,6 +184,10 @@
                 #linter = [ ]; # TODO: find linter
                 #other = with pkgs; [ ];
               });
+              java = mkLang {
+                lsp = [ pkgs.jdt-language-server ];
+                other = with pkgs; [ zulu ];
+              };
             };
           };
 
@@ -306,6 +310,13 @@
                   obsidian-nvim
                 ];
                 typst = with pkgs.vimPlugins; [ typst-preview-nvim ];
+                java = with pkgs.vimPlugins; [
+                  nvim-java
+                  nvim-java-refactor
+                  nvim-java-test
+                  nvim-java-dap
+                  nvim-java-core
+                ];
               };
 
               lsp = with pkgs.vimPlugins; [ nvim-lspconfig ];
@@ -412,6 +423,27 @@
               rust = true;
               julia = true;
               typst = true;
+              java = true;
+            };
+            colorScheme = {
+
+              base00 = "#2b3339";
+              base01 = "#323c41";
+              base02 = "#503946";
+              base03 = "#868d80";
+              base04 = "#d3c6aa";
+              base05 = "#d3c6aa";
+              base06 = "#e9e8d2";
+              base07 = "#fff9e8";
+              base08 = "#7fbbb3";
+              base09 = "#d699b6";
+              base0A = "#83c092";
+              base0B = "#dbbc7f";
+              base0C = "#e69875";
+              base0D = "#a7c080";
+              base0E = "#e67e80";
+              base0F = "#d699b6";
+
             };
             example = {
               youCan = "add more than just booleans";
