@@ -68,9 +68,7 @@
       # import nixpkgs { config = extra_pkg_config; inherit system; }
       # will not apply to module imports
       # as that will have your system values
-      extra_pkg_config = {
-        # allowUnfree = true;
-      };
+      extra_pkg_config = { allowUnfree = true; };
       # sometimes our overlays require a ${system} to access the overlay.
       # management of this variable is one of the harder parts of using flakes.
 
@@ -155,7 +153,10 @@
                 formatter = [ pkgs.stylua ];
                 linter = [ pkgs.selene ];
               };
-              c = mkLang { lsp = [ pkgs.clang-tools ]; };
+              c = mkLang {
+                lsp = [ pkgs.clang-tools ];
+                debugger = [ pkgs.vscode-extensions.ms-vscode.cpptools ];
+              };
               typst = mkLang {
                 lsp = [ pkgs.tinymist ];
                 formatter = [ pkgs.typstfmt ];
@@ -422,6 +423,7 @@
               julia = true;
               typst = true;
               java = true;
+              c = true;
             };
             colorScheme = {
 
@@ -443,6 +445,9 @@
               base0F = "#d699b6";
 
             };
+            cDebugPath =
+              "${pkgs.vscode-extensions.ms-vscode.cpptools}/share/vscode/extensions/ms-vscode.cpptools/debugAdapters/bin/OpenDebugAD7";
+            gdbPath = pkgs.lib.getExe pkgs.gdb;
             example = {
               youCan = "add more than just booleans";
               toThisSet = [
