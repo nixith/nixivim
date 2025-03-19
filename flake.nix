@@ -154,7 +154,7 @@
                 linter = [ pkgs.selene ];
               };
               c = mkLang {
-                lsp = [ pkgs.clang-tools ];
+                lsp = [ pkgs.llvmPackages_20.clang-tools ];
                 debugger = [ pkgs.vscode-extensions.ms-vscode.cpptools ];
               };
               typst = mkLang {

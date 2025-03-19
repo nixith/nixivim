@@ -8,22 +8,21 @@ local blink_cmd_keymap = {
 local blink_opts = {
 	keymap = {
 		preset = "enter",
-		cmdline = {
-			preset = "enter",
-			["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
-			["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
-		},
+		-- cmdline = {
+		-- 	preset = "enter",
+		-- 	["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+		-- 	["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+		-- },
 	},
 	completion = {
 		ghost_text = { enabled = true },
 		list = {
 			selection = {
-  preselect = function(ctx)
-    return ctx.mode ~= 'cmdline' and not require('blink.cmp').snippet_active({ direction = 1 })
-  end,
-  -- auto_insert = function(ctx) return ctx.mode ~= 'cmdline' end,
-
-      }
+				preselect = function(ctx)
+					return ctx.mode ~= "cmdline" and not require("blink.cmp").snippet_active({ direction = 1 })
+				end,
+				-- auto_insert = function(ctx) return ctx.mode ~= 'cmdline' end,
+			},
 		},
 		menu = { draw = { treesitter = { "lsp" } } },
 	},
