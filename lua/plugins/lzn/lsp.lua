@@ -9,6 +9,7 @@ require("project_nvim").setup({
 		update_root = true,
 	},
 })
+require("idris2").setup({})
 return {
 	{ -- LSP Configuration & Plugins
 		"nvim-lspconfig",

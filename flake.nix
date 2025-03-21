@@ -143,6 +143,10 @@
               exercism
             ];
             language = {
+              idris = mkLang {
+                lsp = with pkgs.idris2Packages; [ idris2Lsp ];
+                other = with pkgs; [ idris2 ];
+              };
               nix = mkLang {
                 other = [ pkgs.nix-doc ];
                 lsp = [ pkgs.nixd ];
@@ -169,6 +173,7 @@
               python = mkLang {
                 lsp = with pkgs; [ basedpyright ];
                 formatter = with pkgs; [ ruff ];
+                other = [ pkgs.python3.pkgs.jupytext ];
               };
               rust = (mkLang {
                 lsp = [ pkgs.rust-analyzer ];
@@ -198,6 +203,7 @@
                 # Needed to lazy load plugins
                 lz-n
                 iron-nvim
+                jupytext-nvim
                 conjure
                 cmp-conjure
                 baleia-nvim
@@ -307,14 +313,16 @@
                   render-markdown-nvim
                   obsidian-nvim
                 ];
+                idris = with pkgs.vimPlugins; [ idris2-nvim ];
                 typst = with pkgs.vimPlugins; [ typst-preview-nvim ];
-                java = with pkgs.vimPlugins; [
-                  nvim-java
-                  nvim-java-refactor
-                  nvim-java-test
-                  nvim-java-dap
-                  nvim-java-core
-                ];
+                java = with pkgs.vimPlugins;
+                  [
+                    # nvim-java
+                    # nvim-java-refactor
+                    # nvim-java-test
+                    # nvim-java-dap
+                    # nvim-java-core
+                  ];
                 c = with pkgs.vimPlugins; [ clangd_extensions-nvim ];
               };
 
@@ -420,10 +428,11 @@
               python = true;
               lua = true;
               rust = true;
-              julia = true;
+              #julia = true;
               typst = true;
-              java = true;
+              #java = true;
               c = true;
+              idris = true;
             };
             colorScheme = {
 
