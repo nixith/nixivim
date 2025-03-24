@@ -8,42 +8,12 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    coq = {
-      url = "github:ms-jpq/coq_nvim";
-      flake = false;
-    };
 
-    care-nvim = { url = "github:max397574/care.nvim"; };
     blink-cmp = { url = "github:Saghen/blink.cmp"; };
-    plugins-care-cmp = {
-      url = "github:max397574/care-cmp";
-      flake = false;
-    };
-    plugins-lazydev = {
-      url = "github:folke/lazydev.nvim";
-      flake = false;
-    };
-    plugins-blink-compat = {
-      url = "github:Saghen/blink.compat";
-      flake = false;
-    };
-    # plugins-snacks-nvim = {
-    #   url = "github:folke/snacks.nvim";
-    #   flake = false;
-    # };
-    #2KAbhishek/termim.nvim
-    # plugins-exercism-nvim = {
-    #   url = "github:2KAbhishek/exercism.nvim";
-    #   flake = false;
-    # };
-    plugins-termim-nvim = {
-      url = "github:2KAbhishek/termim.nvim";
-      flake = false;
-    };
 
-    # neovim-nightly-overlay = {
-    #   url = "github:nix-community/neovim-nightly-overlay";
-    # };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+    };
 
     # see :help nixCats.flake.inputs
     # If you want your plugin to be loaded by the standard overlay,
@@ -58,7 +28,7 @@
   };
 
   # see :help nixCats.flake.outputs
-  outputs = { self, nixpkgs, nixCats, care-nvim, blink-cmp, coq, ... }@inputs:
+  outputs = { self, nixpkgs, nixCats, blink-cmp, ... }@inputs:
     let
       inherit (nixCats) utils;
       luaPath = "${./.}";
@@ -109,10 +79,7 @@
           # Self made function, add langauge-based dependencies easily
           mkLang = { lsp ? [ ], formatter ? [ ], linter ? [ ], debugger ? [ ]
             , other ? [ ] }:
-            (other ++ pkgs.lib.optionals categories.lsp lsp
-              ++ pkgs.lib.optionals categories.lint linter
-              ++ pkgs.lib.optionals categories.debug debugger
-              ++ pkgs.lib.optionals categories.format formatter);
+            (other ++ lsp ++ linter ++ debugger ++ formatter);
         in {
           # to define and use a new category, simply add a new list to a set here, 
           # and later, you will include categoryname = true; in the set you
@@ -132,21 +99,16 @@
           # this includes LSPs
           lspsAndRuntimeDeps = {
             general = with pkgs; [
-              # runtime deps
               fd
               ripgrep
+              sqlite
               fzf
               universal-ctags
               stdenv.cc.cc
               typos-lsp
               imagemagick
-              exercism
             ];
             language = {
-              idris = mkLang {
-                lsp = with pkgs.idris2Packages; [ idris2Lsp ];
-                other = with pkgs; [ idris2 ];
-              };
               nix = mkLang {
                 other = [ pkgs.nix-doc ];
                 lsp = [ pkgs.nixd ];
@@ -181,12 +143,6 @@
                 linter = [ pkgs.clippy ];
                 other = with pkgs; [ graphviz-nox ];
               });
-              julia = (mkLang {
-                lsp = [ pkgs.julia ];
-                #formatter = [ ]; # TODO: find formatter
-                #linter = [ ]; # TODO: find linter
-                #other = with pkgs; [ ];
-              });
               java = mkLang {
                 lsp = [ pkgs.jdt-language-server ];
                 other = with pkgs; [ zulu ];
@@ -195,157 +151,73 @@
           };
 
           # This is for plugins that will load at startup without using packadd:
-          startupPlugins =
-            { # TODO: review every plugin, configure it, lazy load it or mark it as completed
-              general = with pkgs.vimPlugins; [
-                #pkgs.neovimPlugins.exercism-nvim
-                mini-nvim
-                # Needed to lazy load plugins
-                lz-n
-                iron-nvim
-                jupytext-nvim
-                conjure
-                cmp-conjure
-                baleia-nvim
-                rtp-nvim
-                lzn-auto-require
-                project-nvim
-                remote-nvim-nvim
-
-                # Lazy loads itself
-
-                # Otherwise want immediately
-
-                nvim-treesitter.withAllGrammars
-
-                # TODO: lazy load & categorize these
-                otter-nvim
-                grug-far-nvim
-                nvim-autopairs # TODO: integrate with cares
-                neoconf-nvim
-                nvim-rip-substitute
-                nvim-treesitter-textobjects # TODO: make bindings
-                SchemaStore-nvim
-                fzf-lua
-                bufferline-nvim # TODO config
-                flash-nvim
-                image-nvim
-                lualine-nvim
-                nvim-notify
-                # spellwarn-nvim # TODO add somehow - not in nixpkgs
-                trouble-nvim
-                which-key-nvim
-                #typst-preview # TODO not in nixpkgs
-                friendly-snippets
-                gitsigns-nvim
-                marks-nvim
-                neogen
-                neotest # TODO - other neotest plugins
-                nvim-dap # TODO - other dap plugins
-                nvim-dap-virtual-text
-                nvim-dap-ui
-                nvim-snippets
-                nvim-ts-autotag
-                rainbow-delimiters-nvim
-                persisted-nvim
-
-                #render-markdown-nvim
-                #markview-nvim
-
-              ];
-              cmp = with pkgs.vimPlugins; [
-                #  if using care
-                #pkgs.neovimPlugins.care-cmp
-                #inputs.care-nvim.packages.${pkgs.system}.care-nvim
-
-                #   # (coq_nvim.overrideAttrs
-                #   #   (finalAttrs: previousAttrs: { src = coq; }))
-                #   # coq-artifacts
-                #   # coq-thirdparty
-                #   # cmp-buffer
-                #   # cmp-cmdline
-                #   # cmp-async-path
-                #   # cmp-nvim-lsp-signature-help
-                #   #cmp-nvim-lsp
-                #   # nvim-cmp
-
-                # If using blink
-                blink-cmp.packages.${pkgs.system}.default
-                pkgs.neovimPlugins.blink-compat
-                pkgs.neovimPlugins.lazydev
-              ];
-
-              #TODO: move as much as possible of the below to optional plugins
-              #++ (with pkgs.vimPlugins; [ cmp-nvim-lsp cmp-path ]);
-              editor = with pkgs.vimPlugins; [
-                comment-nvim
-                nvim-autopairs
-                indent-blankline-nvim
-              ];
-              ui = with pkgs.vimPlugins; [
-                #TODO: Trouble
-                helpview-nvim
-                dressing-nvim
-                flash-nvim
-                which-key-nvim
-                rose-pine
-                noice-nvim
-                catppuccin-nvim
-                telescope-nvim
-                toggleterm-nvim
-                telescope-fzf-native-nvim
-                nvim-web-devicons
-                fidget-nvim
-                plenary-nvim
-                todo-comments-nvim
-                trouble-nvim
-                gitsigns-nvim
-                which-key-nvim
-                neo-tree-nvim
-                nui-nvim
-
-                snacks-nvim
-              ];
-              language = {
-                #lua = with pkgs.vimPlugins; [ lazydev-nvim ];
-                rust = with pkgs.vimPlugins; [ rustaceanvim crates-nvim ];
-                markdown = with pkgs.vimPlugins; [
-                  render-markdown-nvim
-                  obsidian-nvim
-                ];
-                idris = with pkgs.vimPlugins; [ idris2-nvim ];
-                typst = with pkgs.vimPlugins; [ typst-preview-nvim ];
-                java = with pkgs.vimPlugins;
-                  [
-                    # nvim-java
-                    # nvim-java-refactor
-                    # nvim-java-test
-                    # nvim-java-dap
-                    # nvim-java-core
-                  ];
-                c = with pkgs.vimPlugins; [ clangd_extensions-nvim ];
-              };
-
-              lsp = with pkgs.vimPlugins; [ nvim-lspconfig ];
-
-              lint = with pkgs.vimPlugins; [ nvim-lint ];
-              format = with pkgs.vimPlugins; [ conform-nvim ];
-
-              snippets = with pkgs.vimPlugins; [
-                nvim-snippets
-                friendly-snippets
-              ];
-            };
+          startupPlugins = { };
 
           # not loaded automatically at startup.
           # use with packadd and an autocommand in config to achieve lazy loading
           optionalPlugins = {
-            general = with pkgs.vimPlugins;
-              [
-                # nixCats will filter out duplicate packages
-                # so you can put dependencies with stuff even if they're
-                # also somewhere else
-              ];
+            general = with pkgs.vimPlugins; [
+              #pkgs.neovimPlugins.exercism-nvim
+              # Needed to lazy load plugins
+              lz-n
+              lzn-auto-require
+              #TODO: lzn spec these
+              mini-nvim
+              otter-nvim
+              nvim-treesitter.withAllGrammars
+              grug-far-nvim
+              neoconf-nvim
+              nvim-treesitter-textobjects # TODO: make bindings
+              SchemaStore-nvim
+              fzf-lua
+              lualine-nvim
+
+              flash-nvim
+              nvim-notify
+              which-key-nvim
+              friendly-snippets
+              nvim-snippets
+
+              #gitsigns-nvim
+              neogen
+              neotest # TODO - other neotest plugins
+              nvim-dap # TODO - other dap plugins
+              nvim-dap-virtual-text
+              nvim-dap-ui
+              #nvim-ts-autotag - replace with mini
+              #rainbow-delimiters-nvim
+              persisted-nvim
+              helpview-nvim
+
+              snacks-nvim
+
+              nvim-lint
+              conform-nvim
+
+              #render-markdown-nvim
+              #markview-nvim
+
+              blink-cmp.packages.${pkgs.system}.default
+              blink-compat
+              lazydev-nvim
+            ];
+
+            language = {
+              #lua = with pkgs.vimPlugins; [ lazydev-nvim ];
+              rust = with pkgs.vimPlugins; [ rustaceanvim crates-nvim ];
+              markdown = with pkgs.vimPlugins; [ markview-nvim obsidian-nvim ];
+              idris = with pkgs.vimPlugins; [ idris2-nvim ];
+              typst = with pkgs.vimPlugins; [ typst-preview-nvim ];
+              java = with pkgs.vimPlugins;
+                [
+                  # nvim-java
+                  # nvim-java-refactor
+                  # nvim-java-test
+                  # nvim-java-dap
+                  # nvim-java-core
+                ];
+              c = with pkgs.vimPlugins; [ clangd_extensions-nvim ];
+            };
 
           };
 
@@ -382,10 +254,7 @@
           # or run from nvim terminal via :!<packagename>-python3
           extraPython3Packages = { test = (_: [ ]); };
           # populates $LUA_PATH and $LUA_CPATH
-          extraLuaPackages = {
-            test = [ (_: [ ]) ];
-            images = [ (p: with p; [ magick ]) ];
-          };
+          extraLuaPackages = { general = [ (p: with p; [ magick ]) ]; };
         };
 
       # And then build a package with specific categories from above here:
@@ -402,6 +271,8 @@
           # see :help nixCats.flake.outputs.settings
           settings = {
             wrapRc = true;
+            neovim-unwrapped =
+              inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
             # IMPORTANT:
             # your alias may not conflict with your other packages.
             aliases = [ "vim" ];
@@ -412,16 +283,7 @@
           # (and other information to pass to lua)
           categories = {
             general = true;
-            images = true;
-            editor = true;
-            lint = true;
-            debug = false; # TODO: set up debugging
-            format = true;
-            lsp = true;
-            cmp = true;
             customPlugins = true;
-            test = true;
-            ui = true;
             language = {
               nix = true;
               markdown = true;
