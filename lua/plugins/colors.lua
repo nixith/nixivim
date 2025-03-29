@@ -1,12 +1,8 @@
-local scheme = require("nixCats").cats.colorScheme
-
+---@type lz.n.Spec
 return {
-	"mini.nvim",
-	colorscheme = "mini16",
-	after = function()
-		require("mini.base16").setup({
-			palette = scheme,
-			use_cterm = true,
-		})
+	"everforest",
+	colorscheme = "everforest",
+	before = function()
+		vim.g.everforest_enable_italic = true
 	end,
 }

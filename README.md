@@ -23,23 +23,26 @@ IDEA:
 instead of env vars, optionally load a file, then use a maybe style (if nil). Write arbitrary text to this file using nix for my plugin to check.
 
 
+## other config
 
+- [ ] verbose diagnostic display
+- [ ] verbose fold line
 ## Plugins
 ### general
-- [ ] lz.n 
-- [ ] blink.cmp
-- [ ] fzf-lua
-- [ ] snacks-nvim
-- [ ] mini.*
-- [ ] which-key
+- [x] lz.n  TODO: move over to lze, I think I need some specific loading order for blink and markview
+- [x] blink.cmp
+- [ ] ~~fzf-lua~~ handled by snacks apparently?? It's worked well enough for me. Very responsive, one less plugin
+- [x] snacks-nvim
+- [x] mini.*
+- [x] which-key
 - [ ] oil
-- [ ] format(conform)
+- [ ] format(conform) --TODO: add language support
 - [ ] lint
 - [ ] otter
 - [ ] lualine
-- [ ] friendly-snippets
+- [x] friendly-snippets
 - [ ] dap
-- [ ] dap-ui
+- [ ] ~~dap-ui~~ try [debugmaster](https://github.com/miroshQa/debugmaster.nvim), may prove less janky/frustrating
 - [ ] neotest
 - [ ] sessions
 
@@ -52,3 +55,4 @@ instead of env vars, optionally load a file, then use a maybe style (if nil). Wr
 - [ ] bash
 - [ ] markdown (markview, it has typst support!)
 - [ ] typst
+- [ ] something for spellcheck?

@@ -151,7 +151,9 @@
           };
 
           # This is for plugins that will load at startup without using packadd:
-          startupPlugins = { };
+          startupPlugins = {
+            general = with pkgs.vimPlugins; [ lz-n lzn-auto-require ];
+          };
 
           # not loaded automatically at startup.
           # use with packadd and an autocommand in config to achieve lazy loading
@@ -159,8 +161,6 @@
             general = with pkgs.vimPlugins; [
               #pkgs.neovimPlugins.exercism-nvim
               # Needed to lazy load plugins
-              lz-n
-              lzn-auto-require
               #TODO: lzn spec these
               mini-nvim
               otter-nvim
@@ -171,6 +171,7 @@
               SchemaStore-nvim
               fzf-lua
               lualine-nvim
+              todo-comments-nvim
 
               flash-nvim
               nvim-notify
@@ -178,7 +179,7 @@
               friendly-snippets
               nvim-snippets
 
-              #gitsigns-nvim
+              gitsigns-nvim
               neogen
               neotest # TODO - other neotest plugins
               nvim-dap # TODO - other dap plugins
@@ -195,18 +196,19 @@
               conform-nvim
 
               #render-markdown-nvim
-              #markview-nvim
+              markview-nvim
 
               blink-cmp.packages.${pkgs.system}.default
-              blink-compat
+              # blink-compat
               lazydev-nvim
+
+              everforest
             ];
 
             language = {
               #lua = with pkgs.vimPlugins; [ lazydev-nvim ];
               rust = with pkgs.vimPlugins; [ rustaceanvim crates-nvim ];
               markdown = with pkgs.vimPlugins; [ markview-nvim obsidian-nvim ];
-              idris = with pkgs.vimPlugins; [ idris2-nvim ];
               typst = with pkgs.vimPlugins; [ typst-preview-nvim ];
               java = with pkgs.vimPlugins;
                 [
@@ -359,8 +361,7 @@
           default = pkgs.mkShell {
             name = defaultPackageName;
             packages = [ defaultPackage ];
-            inputsFrom = [ ];
-            shellHook = "";
+            inputsFrom = [ defaultPackage ];
           };
         };
 
