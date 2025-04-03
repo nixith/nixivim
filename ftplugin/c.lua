@@ -1,7 +1,5 @@
-require("lint").linters_by_ft =
-	{ --TODO: check if this should actually be a different autocmd per buffer, not sure of the implications
-		c = { "clang-tidy" },
-	}
+require("util.lang").setup("c", "clang-format", "clangtidy", "clangd")
+require("util.dap").register_lldb()
 
 vim.bo.expandtab = true
 vim.bo.shiftwidth = 2

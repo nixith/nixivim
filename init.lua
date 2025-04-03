@@ -68,13 +68,13 @@ vim.g.maplocalleader = "\\"
 vim.o.shell = "fish"
 
 require("config.autocommands")
-
 require("lz.n").load("plugins")
+
 -- set colorscheme
 vim.cmd.colorscheme("everforest")
 
 -- Set to `false` to globally disable all snacks animations
-vim.g.snacks_animate = true -- we do this in mini I think
+vim.g.snacks_animate = true
 
 -- diagnostics
 vim.diagnostic.config({

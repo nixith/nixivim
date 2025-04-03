@@ -10,6 +10,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 	callback = function()
 		if vim.o.buftype ~= "nofile" then
 			vim.cmd("checktime")
+			vim.opt_local.spell = false --TODO: move this to check if the buffer is writeable
 		end
 	end,
 })

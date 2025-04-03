@@ -56,3 +56,8 @@ instead of env vars, optionally load a file, then use a maybe style (if nil). Wr
 - [ ] markdown (markview, it has typst support!)
 - [ ] typst
 - [ ] something for spellcheck?
+
+### debug
+- [ ] tmux repl support
+- [ ] tmux external dap support
+- [ ] tmux support

@@ -10,9 +10,9 @@
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
     blink-cmp = { url = "github:Saghen/blink.cmp"; };
-
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
+    plugins-nvim-dap-view = {
+      url = "github:igorlfs/nvim-dap-view";
+      flake = false;
     };
 
     # see :help nixCats.flake.inputs
@@ -51,25 +51,25 @@
 
       # this allows you to use ${pkgs.system} whenever you want in those sections
       # without fear.
-      inherit (forEachSystem (system:
-        let
-          # see :help nixCats.flake.outputs.overlays
-          dependencyOverlays = # (import ./overlays inputs) ++
-            [
-              # This overlay grabs all the inputs named in the format
-              # `plugins-<pluginName>`
-              # Once we add this overlay to our nixpkgs, we are able to
-              # use `pkgs.neovimPlugins`,  which is a set of our plugins.
-              (utils.standardPluginOverlay inputs)
-              # add any flake overlays here.
-            ];
-          # these overlays will be wrapped with ${system}
-          # and we will call the same utils.eachSystem function
-          # later on to access them.
-          #
+      # inherit (forEachSystem (system:
+      #   let
+      #     # see :help nixCats.flake.outputs.overlays
+      dependencyOverlays = # (import ./overlays inputs) ++
+        [
+          # This overlay grabs all the inputs named in the format
+          # `plugins-<pluginName>`
+          # Once we add this overlay to our nixpkgs, we are able to
+          # use `pkgs.neovimPlugins`,  which is a set of our plugins.
+          (utils.standardPluginOverlay inputs)
+          # add any flake overlays here.
+        ];
+      # these overlays will be wrapped with ${system}
+      # and we will call the same utils.eachSystem function
+      # later on to access them.
+      #
 
-        in { inherit dependencyOverlays; }))
-        dependencyOverlays;
+      # in { inherit dependencyOverlays; }))
+      # dependencyOverlays;
       # see :help nixCats.flake.outputs.categories
       # and
       # :help nixCats.flake.outputs.categoryDefinitions.scheme
@@ -121,7 +121,7 @@
               };
               c = mkLang {
                 lsp = [ pkgs.llvmPackages_20.clang-tools ];
-                debugger = [ pkgs.vscode-extensions.ms-vscode.cpptools ];
+                debugger = [ pkgs.gdb ];
               };
               typst = mkLang {
                 lsp = [ pkgs.tinymist ];
@@ -145,14 +145,23 @@
               });
               java = mkLang {
                 lsp = [ pkgs.jdt-language-server ];
-                other = with pkgs; [ zulu ];
+                other = with pkgs; [
+                  zulu
+                  vscode-extensions.vscjava.vscode-java-debug
+                  vscode-extensions.vscjava.vscode-java-test
+                ];
               };
             };
           };
 
           # This is for plugins that will load at startup without using packadd:
           startupPlugins = {
-            general = with pkgs.vimPlugins; [ lz-n lzn-auto-require ];
+            general = with pkgs.vimPlugins; [
+              lz-n
+              lzn-auto-require
+
+              friendly-snippets # think this is needed for runtime path? Might be able to move later
+            ];
           };
 
           # not loaded automatically at startup.
@@ -171,24 +180,29 @@
               SchemaStore-nvim
               fzf-lua
               lualine-nvim
+              overseer-nvim
               todo-comments-nvim
 
               flash-nvim
               nvim-notify
               which-key-nvim
-              friendly-snippets
               nvim-snippets
+              project-nvim
 
               gitsigns-nvim
               neogen
               neotest # TODO - other neotest plugins
+              FixCursorHold-nvim
               nvim-dap # TODO - other dap plugins
               nvim-dap-virtual-text
               nvim-dap-ui
+              nvim-dap-lldb
+              (pkgs.neovimPlugins.nvim-dap-view)
               #nvim-ts-autotag - replace with mini
               #rainbow-delimiters-nvim
               persisted-nvim
               helpview-nvim
+              tmux-nvim
 
               snacks-nvim
 
@@ -210,14 +224,7 @@
               rust = with pkgs.vimPlugins; [ rustaceanvim crates-nvim ];
               markdown = with pkgs.vimPlugins; [ markview-nvim obsidian-nvim ];
               typst = with pkgs.vimPlugins; [ typst-preview-nvim ];
-              java = with pkgs.vimPlugins;
-                [
-                  # nvim-java
-                  # nvim-java-refactor
-                  # nvim-java-test
-                  # nvim-java-dap
-                  # nvim-java-core
-                ];
+              java = with pkgs.vimPlugins; [ nvim-jdtls ];
               c = with pkgs.vimPlugins; [ clangd_extensions-nvim ];
             };
 
@@ -268,13 +275,15 @@
       packageDefinitions = {
         # These are the names of your packages
         # you can include as many as you wish.
-        nvim = { pkgs, ... }: {
+        nvim = { pkgs, ... }: rec {
           # they contain a settings set defined above
           # see :help nixCats.flake.outputs.settings
           settings = {
             wrapRc = true;
-            neovim-unwrapped =
-              inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+            suffix-path = true;
+            suffix-LD = true;
+            # neovim-unwrapped =
+            #   inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
             # IMPORTANT:
             # your alias may not conflict with your other packages.
             aliases = [ "vim" ];
@@ -294,9 +303,23 @@
               rust = true;
               #julia = true;
               typst = true;
-              #java = true;
+              java = true;
               c = true;
               idris = true;
+            };
+
+            LLDB_PATH =
+              pkgs.lib.mkIf (categories.language.c || categories.language.rust)
+              "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
+
+            javaEnv = pkgs.lib.mkIf (categories.language.java) {
+              JDK = "${pkgs.zulu}/bin/java";
+              JDT_PATH = "${pkgs.jdt-language-server}/share/java/jdtls/";
+              JAVA_DBG =
+                "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server/";
+              JAVA_TEST =
+                "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test/server/";
+
             };
             colorScheme = {
 
