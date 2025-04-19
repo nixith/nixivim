@@ -147,6 +147,13 @@
                 lsp = [ pkgs.llvmPackages_20.clang-tools ];
                 debugger = [ pkgs.gdb ];
               };
+              asm = mkLang {
+                lsp = with pkgs; [
+                  asm-lsp
+                  asmfmt
+                ];
+                debugger = [ pkgs.gdb ];
+              };
               typst = mkLang {
                 lsp = [ pkgs.tinymist ];
                 formatter = [ pkgs.typstfmt ];
@@ -348,6 +355,7 @@
                 typst = true;
                 java = true;
                 c = true;
+                asm = true;
                 idris = true;
               };
 
