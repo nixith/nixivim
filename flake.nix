@@ -9,13 +9,15 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
-    blink-cmp = {
-      url = "github:Saghen/blink.cmp";
-    };
+    # blink-cmp = {
+    #   url = "github:Saghen/blink.cmp";
+    # };
     plugins-nvim-dap-view = {
       url = "github:igorlfs/nvim-dap-view";
       flake = false;
     };
+
+    rustowl.url = "github:nix-community/rustowl-flake";
 
     # see :help nixCats.flake.inputs
     # If you want your plugin to be loaded by the standard overlay,
@@ -35,7 +37,8 @@
       self,
       nixpkgs,
       nixCats,
-      blink-cmp,
+      rustowl,
+      # blink-cmp,
       ...
     }@inputs:
     let
@@ -173,7 +176,10 @@
                   lsp = [ pkgs.rust-analyzer ];
                   formatter = [ pkgs.rustfmt ];
                   linter = [ pkgs.clippy ];
-                  other = with pkgs; [ graphviz-nox ];
+                  other = with pkgs; [
+                    graphviz-nox
+                    rustowl.packages.${pkgs.system}.rustowl
+                  ];
                 }
               );
               java = mkLang {
@@ -184,6 +190,21 @@
                   vscode-extensions.vscjava.vscode-java-test
                 ];
               };
+              raku =
+                let
+                  vscPackage = (
+                    pkgs.vscode-utils.extensionFromVscodeMarketplace {
+                      name = "raku-navigator";
+                      publisher = "bscan";
+                      version = "0.0.194";
+                      hash = "sha256-zvr8cfZSO566MhIQ6K+ANC6EBZLWdOly8MDvgiKgyqo=";
+                    }
+                  );
+                in
+                mkLang {
+
+                };
+
             };
           };
 
@@ -197,7 +218,7 @@
             ];
           };
 
-          # not loaded automatically at startup.
+          # not loaded automaticalI don’t do what I preachly at startup.
           # use with packadd and an autocommand in config to achieve lazy loading
           optionalPlugins = {
             general = with pkgs.vimPlugins; [
@@ -245,11 +266,12 @@
               #render-markdown-nvim
               markview-nvim
 
-              blink-cmp.packages.${pkgs.system}.default
+              blink-cmp
               # blink-compat
               lazydev-nvim
 
               everforest
+              trouble-nvim
             ];
 
             language = {
@@ -257,6 +279,7 @@
               rust = with pkgs.vimPlugins; [
                 rustaceanvim
                 crates-nvim
+                rustowl.packages.${pkgs.system}.rustowl-nvim
               ];
               markdown = with pkgs.vimPlugins; [
                 markview-nvim

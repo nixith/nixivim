@@ -73,7 +73,7 @@ return {
 		end,
 	},
 	{
-		"blink-cmp",
+		"blink.cmp",
 		-- optional: provides snippets for the snippet source
 
 		-- use a release tag to download pre-built binaries
