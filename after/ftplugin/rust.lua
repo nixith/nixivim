@@ -24,3 +24,5 @@ require("rustowl").setup({
 		end,
 	},
 })
+
+require("util.lang").setup("rust", "rustfmt", "clippy", nil)
