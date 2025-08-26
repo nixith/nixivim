@@ -72,6 +72,13 @@ return {
 				desc = "step over",
 			},
 			{
+				"<leader>dr",
+				function()
+					require("dap").restart()
+				end,
+				desc = "step over",
+			},
+			{
 				"<leader>di",
 				function()
 					require("dap").step_into()

@@ -61,3 +61,5 @@ opt.wrap = false -- Disable line wrap
 opt.smoothscroll = true
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
+
+vim.lsp.inlay_hint.enable(true)

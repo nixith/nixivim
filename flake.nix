@@ -6,6 +6,7 @@
   description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
 
   inputs = {
+    flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
@@ -134,11 +135,15 @@
               stdenv.cc.cc
               typos-lsp
               imagemagick
+              ghostscript_headless
             ];
             language = {
               nix = mkLang {
                 other = [ pkgs.nix-doc ];
-                lsp = [ pkgs.nixd ];
+                lsp = [
+                  pkgs.nixd
+                  pkgs.nil
+                ];
                 formatter = [ pkgs.nixfmt-rfc-style ];
               };
               lua = mkLang {
@@ -190,32 +195,28 @@
                   vscode-extensions.vscjava.vscode-java-test
                 ];
               };
-              raku =
-                let
-                  vscPackage = (
-                    pkgs.vscode-utils.extensionFromVscodeMarketplace {
-                      name = "raku-navigator";
-                      publisher = "bscan";
-                      version = "0.0.194";
-                      hash = "sha256-zvr8cfZSO566MhIQ6K+ANC6EBZLWdOly8MDvgiKgyqo=";
-                    }
-                  );
-                in
-                mkLang {
-
-                };
-
             };
           };
 
           # This is for plugins that will load at startup without using packadd:
           startupPlugins = {
             general = with pkgs.vimPlugins; [
+              # these are all lazy loaded
               lz-n
               lzn-auto-require
+              nvim-dap # TODO - other dap plugins
 
+              blink-cmp
               friendly-snippets # think this is needed for runtime path? Might be able to move later
             ];
+
+            language = {
+              #lua = with pkgs.vimPlugins; [ lazydev-nvim ];
+              rust = with pkgs.vimPlugins; [
+                rustaceanvim
+              ];
+              java = with pkgs.vimPlugins; [ nvim-jdtls ];
+            };
           };
 
           # not loaded automaticalI don’t do what I preachly at startup.
@@ -247,7 +248,7 @@
               neogen
               neotest # TODO - other neotest plugins
               FixCursorHold-nvim
-              nvim-dap # TODO - other dap plugins
+              nvim-dap-view
               nvim-dap-virtual-text
               nvim-dap-ui
               nvim-dap-lldb
@@ -266,7 +267,6 @@
               #render-markdown-nvim
               markview-nvim
 
-              blink-cmp
               # blink-compat
               lazydev-nvim
 
@@ -277,7 +277,6 @@
             language = {
               #lua = with pkgs.vimPlugins; [ lazydev-nvim ];
               rust = with pkgs.vimPlugins; [
-                rustaceanvim
                 crates-nvim
                 rustowl.packages.${pkgs.system}.rustowl-nvim
               ];
@@ -286,7 +285,6 @@
                 obsidian-nvim
               ];
               typst = with pkgs.vimPlugins; [ typst-preview-nvim ];
-              java = with pkgs.vimPlugins; [ nvim-jdtls ];
               c = with pkgs.vimPlugins; [ clangd_extensions-nvim ];
             };
 
@@ -328,9 +326,9 @@
           # in your lua config via
           # vim.g.python3_host_prog
           # or run from nvim terminal via :!<packagename>-python3
-          extraPython3Packages = {
-            test = (_: [ ]);
-          };
+          # extraPython3Packages = {
+          #   test = (_: [ ]);
+          # };
           # populates $LUA_PATH and $LUA_CPATH
           extraLuaPackages = {
             general = [ (p: with p; [ magick ]) ];
@@ -343,90 +341,101 @@
       # This entire set is also passed to nixCats for querying within the lua.
 
       # see :help nixCats.flake.outputs.packageDefinitions
-      packageDefinitions = {
-        # These are the names of your packages
-        # you can include as many as you wish.
-        nvim =
-          { pkgs, ... }:
-          rec {
-            # they contain a settings set defined above
-            # see :help nixCats.flake.outputs.settings
-            settings = {
-              wrapRc = true;
-              suffix-path = true;
-              suffix-LD = true;
-              # neovim-unwrapped =
-              #   inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
-              # IMPORTANT:
-              # your alias may not conflict with your other packages.
-              aliases = [ "vim" ];
-              # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
-              disablePythonSafePath = true;
+      packageDefinitions =
+        let
+          makePkgs =
+            {
+              wrapRc ? true,
+            }:
+
+            { pkgs, ... }:
+            rec {
+              # they contain a settings set defined above
+              # see :help nixCats.flake.outputs.settings
+              settings = {
+                inherit wrapRc;
+                suffix-path = true;
+                suffix-LD = true;
+                # neovim-unwrapped =
+                #   inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+                # IMPORTANT:
+                # your alias may not conflict with your other packages.
+                aliases = [ "vim" ];
+                # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+                disablePythonSafePath = true;
+              };
+              # and a set of categories that you want
+              # (and other information to pass to lua)
+              categories = {
+                general = true;
+                customPlugins = true;
+                language = {
+                  nix = true;
+                  markdown = true;
+                  python = true;
+                  lua = true;
+                  rust = true;
+                  #julia = true;
+                  typst = true;
+                  java = true;
+                  c = true;
+                  asm = true;
+                  idris = true;
+                };
+
+                LLDB_PATH =
+                  pkgs.lib.mkIf (categories.language.c || categories.language.rust)
+                    "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
+
+                javaEnv = pkgs.lib.mkIf (categories.language.java) {
+                  JDK = "${pkgs.zulu}/bin/java";
+                  JDT_PATH = "${pkgs.jdt-language-server}/share/java/jdtls/";
+                  JAVA_DBG = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server/";
+                  JAVA_TEST = "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test/server/";
+
+                };
+                colorScheme = {
+
+                  base00 = "#2b3339";
+                  base01 = "#323c41";
+                  base02 = "#503946";
+                  base03 = "#868d80";
+                  base04 = "#d3c6aa";
+                  base05 = "#d3c6aa";
+                  base06 = "#e9e8d2";
+                  base07 = "#fff9e8";
+                  base08 = "#7fbbb3";
+                  base09 = "#d699b6";
+                  base0A = "#83c092";
+                  base0B = "#dbbc7f";
+                  base0C = "#e69875";
+                  base0D = "#a7c080";
+                  base0E = "#e67e80";
+                  base0F = "#d699b6";
+
+                };
+                cDebugPath = "${pkgs.vscode-extensions.ms-vscode.cpptools}/share/vscode/extensions/ms-vscode.cpptools/debugAdapters/bin/OpenDebugAD7";
+                gdbPath = pkgs.lib.getExe pkgs.gdb;
+                example = {
+                  youCan = "add more than just booleans";
+                  toThisSet = [
+                    "and the contents of this categories set"
+                    "will be accessible to your lua with"
+                    "nixCats('path.to.value')"
+                    "see :help nixCats"
+                  ];
+                };
+              };
             };
-            # and a set of categories that you want
-            # (and other information to pass to lua)
-            categories = {
-              general = true;
-              customPlugins = true;
-              language = {
-                nix = true;
-                markdown = true;
-                python = true;
-                lua = true;
-                rust = true;
-                #julia = true;
-                typst = true;
-                java = true;
-                c = true;
-                asm = true;
-                idris = true;
-              };
-
-              LLDB_PATH =
-                pkgs.lib.mkIf (categories.language.c || categories.language.rust)
-                  "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
-
-              javaEnv = pkgs.lib.mkIf (categories.language.java) {
-                JDK = "${pkgs.zulu}/bin/java";
-                JDT_PATH = "${pkgs.jdt-language-server}/share/java/jdtls/";
-                JAVA_DBG = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server/";
-                JAVA_TEST = "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test/server/";
-
-              };
-              colorScheme = {
-
-                base00 = "#2b3339";
-                base01 = "#323c41";
-                base02 = "#503946";
-                base03 = "#868d80";
-                base04 = "#d3c6aa";
-                base05 = "#d3c6aa";
-                base06 = "#e9e8d2";
-                base07 = "#fff9e8";
-                base08 = "#7fbbb3";
-                base09 = "#d699b6";
-                base0A = "#83c092";
-                base0B = "#dbbc7f";
-                base0C = "#e69875";
-                base0D = "#a7c080";
-                base0E = "#e67e80";
-                base0F = "#d699b6";
-
-              };
-              cDebugPath = "${pkgs.vscode-extensions.ms-vscode.cpptools}/share/vscode/extensions/ms-vscode.cpptools/debugAdapters/bin/OpenDebugAD7";
-              gdbPath = pkgs.lib.getExe pkgs.gdb;
-              example = {
-                youCan = "add more than just booleans";
-                toThisSet = [
-                  "and the contents of this categories set"
-                  "will be accessible to your lua with"
-                  "nixCats('path.to.value')"
-                  "see :help nixCats"
-                ];
-              };
-            };
+        in
+        {
+          # These are the names of your packages
+          # you can include as many as you wish.
+          nvim = makePkgs { };
+          testvim = makePkgs {
+            wrapRc = false;
           };
-      };
+        };
       # In this section, the main thing you will need to do is change the default package name
       # to the name of the packageDefinitions entry you wish to use as the default.
       defaultPackageName = "nvim";

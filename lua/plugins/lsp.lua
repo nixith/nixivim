@@ -12,7 +12,8 @@ vim.lsp.config("*", {
 		},
 	},
 })
-
+-- enable inlay hints
+vim.lsp.inlay_hint.enable(true)
 -- set neovim's working dir to that of the lsp's
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
@@ -34,6 +35,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 			{ "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" } },
 			{ "<leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" } },
+			{
+				"<leader>ui",
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 }),
+				desc = "Toggle inlay hints",
+			},
 			{
 				"<leader>cC",
 				vim.lsp.codelens.refresh,
@@ -96,7 +102,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 --TODO: move individual config extensions to lsp/<lsp>.lua
 --TODO: move over to new lspconfig items, when they're ready
 --TODO: lsp keybinds
-
 vim.lsp.config("nixd", {
 	filetypes = { "nix" },
 	cmd = { "nixd" },
@@ -171,7 +176,8 @@ vim.lsp.config("clangd", {
 	filetypes = { "c", "cpp" },
 })
 
-vim.lsp.enable({ "nixd" })
+vim.lsp.enable("tinymist")
+vim.lsp.enable({ "nixd", "nil_ls" })
 ---@type lz.n.Spec
 return {
 	{
