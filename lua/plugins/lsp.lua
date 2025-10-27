@@ -177,6 +177,7 @@ vim.lsp.config("clangd", {
 })
 
 vim.lsp.enable("tinymist")
+vim.lsp.enable("basedpyright")
 vim.lsp.enable({ "nixd", "nil_ls" })
 ---@type lz.n.Spec
 return {

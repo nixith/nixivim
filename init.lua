@@ -84,5 +84,8 @@ vim.diagnostic.config({
 
 -- doc window
 vim.o.winborder = "rounded"
+if vim.fn.exists("&pumborder") == 1 then
+	vim.o.pumborder = "rounded"
+end
 
 require("lzn-auto-require").enable()
