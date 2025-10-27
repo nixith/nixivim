@@ -185,7 +185,7 @@ return {
 		"project.nvim",
 		event = "DeferredUIEnter",
 		after = function()
-			require("project_nvim").setup({})
+			require("project").setup({})
 		end,
 	},
 	{
