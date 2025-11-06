@@ -164,7 +164,7 @@
               };
               typst = mkLang {
                 lsp = [ pkgs.tinymist ];
-                formatter = [ pkgs.typstfmt ];
+                formatter = [ pkgs.typstyle ];
                 other = [ pkgs.websocat ];
               };
               json = mkLang {
