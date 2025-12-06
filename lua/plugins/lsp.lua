@@ -209,7 +209,7 @@ return {
 		"rustaceanvim",
 		lazy = false,
 	},
-	{ "rustowl", lazy = false },
+	-- { "rustowl", lazy = false },
 }
 
 -- we're doing langs here for now.. I would prefer on filetype, buuuuuut it's weird
