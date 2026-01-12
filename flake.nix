@@ -169,10 +169,17 @@
               };
               json = mkLang {
                 lsp = [ pkgs.nodePackages.vscode-json-languageserver ];
+              web = mkLang {
+                lsp = [
+                  pkgs.vscode-langservers-extracted
+                  pkgs.prettier
+                  pkgs.astro-language-server
+                  pkgs.vtsls
+                ];
                 formatter = [ pkgs.jq ];
               };
               python = mkLang {
-                lsp = with pkgs; [ basedpyright ];
+                lsp = with pkgs; [ ty ];
                 formatter = with pkgs; [ ruff ];
                 other = [ pkgs.python3.pkgs.jupytext ];
               };
@@ -372,6 +379,7 @@
                 language = {
                   nix = true;
                   markdown = true;
+                  web = true;
                   python = true;
                   lua = true;
                   rust = true;
