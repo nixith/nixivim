@@ -176,7 +176,10 @@ vim.lsp.config("clangd", {
 	filetypes = { "c", "cpp" },
 })
 
+vim.lsp.enable({ "eslint", "html", "jsonls", "cssls", "vtsls" })
+vim.lsp.enable("astro")
 vim.lsp.enable("tinymist")
+vim.lsp.enable("astro")
 vim.lsp.enable("ty")
 vim.lsp.enable({ "nixd", "nil_ls" })
 ---@type lz.n.Spec

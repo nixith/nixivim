@@ -167,8 +167,6 @@
                 formatter = [ pkgs.typstyle ];
                 other = [ pkgs.websocat ];
               };
-              json = mkLang {
-                lsp = [ pkgs.nodePackages.vscode-json-languageserver ];
               web = mkLang {
                 lsp = [
                   pkgs.vscode-langservers-extracted
