@@ -167,6 +167,9 @@
                 formatter = [ pkgs.typstyle ];
                 other = [ pkgs.websocat ];
               };
+              markdown = mkLang {
+                linter = with pkgs; [ harper ];
+              };
               web = mkLang {
                 lsp = [
                   pkgs.vscode-langservers-extracted
@@ -175,6 +178,7 @@
                   pkgs.vtsls
                 ];
                 formatter = [ pkgs.jq ];
+
               };
               python = mkLang {
                 lsp = with pkgs; [ ty ];
