@@ -177,7 +177,7 @@ vim.lsp.config("clangd", {
 })
 
 vim.lsp.config("harper_ls", {
-	filetypes = { "*" },
+	filetypes = nil,
 })
 
 vim.lsp.enable({ "eslint", "html", "jsonls", "cssls", "vtsls" })
