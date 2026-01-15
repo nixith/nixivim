@@ -173,7 +173,6 @@ vim.lsp.config("clangd", {
 		"--offset-encoding=utf-8",
 	},
 	root_markers = { ".clangd", "compile_commands.json" },
-	filetypes = { "c", "cpp" },
 })
 
 vim.lsp.config("harper_ls", {
