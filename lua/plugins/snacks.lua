@@ -6,7 +6,7 @@ local snack_opts = {
 	explorer = { enabled = true },
 	indent = { enabled = true },
 	input = { enabled = true },
-	image = { enabled = true },
+	image = { enabled = true, math = { enabled = false } },
 	picker = { enabled = true },
 	notifier = { enabled = true },
 	quickfile = { enabled = true },
