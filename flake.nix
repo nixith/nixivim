@@ -135,6 +135,8 @@
               stdenv.cc.cc
               typos-lsp
               imagemagick
+              tectonic
+              mermaid-cli
               ghostscript_headless
             ];
             language = {
