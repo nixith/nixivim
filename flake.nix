@@ -295,6 +295,7 @@
                 markview-nvim
                 obsidian-nvim
               ];
+              asm = with pkgs.vimPlugins; [ hex-nvim ];
               typst = with pkgs.vimPlugins; [ typst-preview-nvim ];
               c = with pkgs.vimPlugins; [ clangd_extensions-nvim ];
             };
