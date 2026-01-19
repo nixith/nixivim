@@ -88,4 +88,20 @@ if vim.fn.exists("&pumborder") == 1 then
 	vim.o.pumborder = "rounded"
 end
 
+-- treesitter
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "<filetype>" },
+	callback = function()
+		-- highlight
+		vim.treesitter.start()
+
+		-- fold
+		vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+		vim.wo[0][0].foldmethod = "expr"
+
+		-- indent
+		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+	end,
+})
+
 require("lzn-auto-require").enable()

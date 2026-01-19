@@ -217,6 +217,8 @@
               lzn-auto-require
               nvim-dap # TODO - other dap plugins
 
+              nvim-treesitter.withAllGrammars # No longer needs to be lazy loaded
+
               blink-cmp
               friendly-snippets # think this is needed for runtime path? Might be able to move later
             ];
@@ -239,7 +241,6 @@
               #TODO: lzn spec these
               mini-nvim
               otter-nvim
-              nvim-treesitter.withAllGrammars
               grug-far-nvim
               neoconf-nvim
               nvim-treesitter-textobjects # TODO: make bindings
