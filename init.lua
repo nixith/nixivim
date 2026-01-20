@@ -88,8 +88,9 @@ if vim.fn.exists("&pumborder") == 1 then
 	vim.o.pumborder = "rounded"
 end
 
+--TODO: figure out a better trigger system for TS supported buffers
 -- treesitter
-vim.api.nvim_create_autocmd("FileType", {
+vim.api.nvim_create_autocmd("BufNew", {
 	pattern = { "<filetype>" },
 	callback = function()
 		-- highlight
