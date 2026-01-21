@@ -14,6 +14,12 @@ return {
 		lazy = false, -- list lazy loaded
 		after = function()
 			require("markview").setup({
+				typst = {
+					code_blocks = { enable = false },
+					code_spans = { enable = false },
+					math_blocks = { enable = false },
+					math_spans = { enable = false },
+				},
 				preview = {
 					icon_provider = "mini", -- "mini" or "devicons"
 				},
