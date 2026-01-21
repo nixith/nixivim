@@ -11,6 +11,8 @@ return {
 		"typst-preview.nvim",
 		ft = "typst",
 		after = function()
+			-- setup typst stuff
+			require("util.lang").setup("typst", "typstyle", nil, "tinymist")
 			local tinymist = vim.env.TINYMIST_PATH
 			local websocat = vim.env.WEBSOCAT_PATH
 			require("typst-preview").setup({

@@ -182,7 +182,6 @@ vim.lsp.config("harper_ls", {
 vim.lsp.enable({ "eslint", "html", "jsonls", "cssls", "vtsls" })
 vim.lsp.enable("astro")
 vim.lsp.enable("harper_ls")
-vim.lsp.enable("tinymist")
 vim.lsp.enable("astro")
 vim.lsp.enable("ty")
 vim.lsp.enable({ "nixd", "nil_ls" })
