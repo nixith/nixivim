@@ -108,6 +108,8 @@ vim.lsp.config("nixd", {
 	root_markers = {
 		".git",
 		"flake.nix",
+		"/npins",
+		"default.nix",
 	},
 	settings = {
 		nixd = {
@@ -185,6 +187,7 @@ vim.lsp.enable("harper_ls")
 vim.lsp.enable("astro")
 vim.lsp.enable("ty")
 vim.lsp.enable({ "nixd", "nil_ls" })
+
 ---@type lz.n.Spec
 return {
 	{
