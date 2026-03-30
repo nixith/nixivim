@@ -95,6 +95,7 @@ let
           stdenv.cc.cc
           typos-lsp
           imagemagick
+          inotify-tools
           tectonic
           mermaid-cli
           ghostscript_headless
