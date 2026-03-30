@@ -107,7 +107,7 @@ let
               pkgs.nixd
               pkgs.nil
             ];
-            formatter = [ pkgs.nixfmt-rfc-style ];
+            formatter = [ pkgs.nixfmt ];
           };
           lua = mkLang {
             lsp = [ pkgs.lua-language-server ];
