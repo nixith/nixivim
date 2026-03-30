@@ -1,0 +1,55 @@
+{
+  "pins": {
+    "flake-compat": {
+      "type": "Tarball",
+      "url": "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz",
+      "hash": "sha256-NeCCThCEP3eCl2l/+27kNNK7QrwZB1IJCrXfrbv5oqU="
+    },
+    "nixCats": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "ebb9f279a55ca60ff4e37e4accf6518dc627aa8d",
+      "url": "https://github.com/BirdeeHub/nixCats-nvim/archive/ebb9f279a55ca60ff4e37e4accf6518dc627aa8d.tar.gz",
+      "hash": "sha256-6ok7iv/9R82vl6MYe3Lwyyb6S5bmW2PxEZtmjzlqyPs="
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixpkgs-unstable",
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre971056.b63fe7f000ad/nixexprs.tar.xz",
+      "hash": "sha256-5QVei2IIfVO3GqMkiiXlrZtaniOkXyMWnqbTVkItrco="
+    },
+    "plugins-nvim-dap-view": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "igorlfs",
+        "repo": "nvim-dap-view"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "af144cfbdeafd90dfdaa3d406e3f8e06ddc4f0e3",
+      "url": "https://github.com/igorlfs/nvim-dap-view/archive/af144cfbdeafd90dfdaa3d406e3f8e06ddc4f0e3.tar.gz",
+      "hash": "sha256-N2uf71PWXsYTtfj5qXST3Fvx4/zQolNTmTucKzB4RIc="
+    },
+    "rustowl": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "rustowl-flake"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "27153d63454b49f972069304b51fcd630d71c125",
+      "url": "https://github.com/nix-community/rustowl-flake/archive/27153d63454b49f972069304b51fcd630d71c125.tar.gz",
+      "hash": "sha256-JXW4mdfvtyaqgKSr+s9FOGyR5MZ3+IKoRmcZaC19FtY="
+    }
+  },
+  "version": 7
+}
