@@ -166,6 +166,15 @@ let
               vscode-extensions.vscjava.vscode-java-test
             ];
           };
+          go = mkLang {
+            lsp = [ pkgs.gopls ];
+            formatter = [ pkgs.gofumpt ];
+            linter = [ pkgs.golangci-lint ];
+            other = with pkgs; [
+              go
+              gomodifytags
+            ];
+          };
         };
       };
 
@@ -353,6 +362,7 @@ let
               c = true;
               asm = true;
               idris = true;
+              go = true;
             };
 
             LLDB_PATH =

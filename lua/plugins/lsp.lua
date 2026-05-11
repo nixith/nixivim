@@ -186,6 +186,7 @@ vim.lsp.enable("astro")
 vim.lsp.enable("harper_ls")
 vim.lsp.enable("astro")
 vim.lsp.enable("ty")
+vim.lsp.enable("gopls")
 vim.lsp.enable({ "nixd", "nil_ls" })
 
 ---@type lz.n.Spec
