@@ -14,15 +14,15 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "ebb9f279a55ca60ff4e37e4accf6518dc627aa8d",
-      "url": "https://github.com/BirdeeHub/nixCats-nvim/archive/ebb9f279a55ca60ff4e37e4accf6518dc627aa8d.tar.gz",
-      "hash": "sha256-6ok7iv/9R82vl6MYe3Lwyyb6S5bmW2PxEZtmjzlqyPs="
+      "revision": "f69ea013e328841a7def7037ed59788a76be8816",
+      "url": "https://github.com/BirdeeHub/nixCats-nvim/archive/f69ea013e328841a7def7037ed59788a76be8816.tar.gz",
+      "hash": "sha256-xBUa8Tl9V7IXI+VmLEuDc81La/EhoSn1C3EVSnJ3cfU="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre971056.b63fe7f000ad/nixexprs.tar.xz",
-      "hash": "sha256-5QVei2IIfVO3GqMkiiXlrZtaniOkXyMWnqbTVkItrco="
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre990482.c6d65881c562/nixexprs.tar.xz",
+      "hash": "sha256-TT4ptFjjqRdOAlPQRwXpV0ChKARdTvUYYpLMrDSVW4s="
     },
     "plugins-nvim-dap-view": {
       "type": "Git",
@@ -33,9 +33,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "af144cfbdeafd90dfdaa3d406e3f8e06ddc4f0e3",
-      "url": "https://github.com/igorlfs/nvim-dap-view/archive/af144cfbdeafd90dfdaa3d406e3f8e06ddc4f0e3.tar.gz",
-      "hash": "sha256-N2uf71PWXsYTtfj5qXST3Fvx4/zQolNTmTucKzB4RIc="
+      "revision": "e8199a2c2202415785b65799fa92e1a1cd2f4d4f",
+      "url": "https://github.com/igorlfs/nvim-dap-view/archive/e8199a2c2202415785b65799fa92e1a1cd2f4d4f.tar.gz",
+      "hash": "sha256-JTjvTXIj38bkaFBSKRr1kWu2/aveycD/n/Q3ETYIavw="
     },
     "rustowl": {
       "type": "Git",
@@ -46,9 +46,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "27153d63454b49f972069304b51fcd630d71c125",
-      "url": "https://github.com/nix-community/rustowl-flake/archive/27153d63454b49f972069304b51fcd630d71c125.tar.gz",
-      "hash": "sha256-JXW4mdfvtyaqgKSr+s9FOGyR5MZ3+IKoRmcZaC19FtY="
+      "revision": "2728f7f9d2c785506f0f8f9cb38cc4232e97a629",
+      "url": "https://github.com/nix-community/rustowl-flake/archive/2728f7f9d2c785506f0f8f9cb38cc4232e97a629.tar.gz",
+      "hash": "sha256-017MUbvwOswy/VUo9YCG+xL+tck4xhHYmpC7KAyU+Ns="
     }
   },
   "version": 7
