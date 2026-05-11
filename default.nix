@@ -186,7 +186,7 @@ let
           lzn-auto-require
           nvim-dap # TODO - other dap plugins
 
-          # nvim-treesitter.withAllGrammars # No longer needs to be lazy loaded
+          nvim-treesitter.withAllGrammars # No longer needs to be lazy loaded
 
           blink-cmp
           friendly-snippets # think this is needed for runtime path? Might be able to move later
