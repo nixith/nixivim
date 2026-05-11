@@ -101,7 +101,7 @@ vim.api.nvim_create_autocmd("BufNew", {
 		vim.wo[0][0].foldmethod = "expr"
 
 		-- indent
-		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		-- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 	end,
 })
 
